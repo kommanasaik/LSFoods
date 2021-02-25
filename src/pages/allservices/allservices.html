@@ -1,0 +1,71 @@
+<ion-header>
+  <header [title]="headerTitle"></header>
+</ion-header>
+
+<ion-content padding>
+  <!-- <ion-item>
+    
+      <ion-select id="ions"  formControlName="catid" style="width: 100% !important;max-width:none !important ;" placeholder="Select Catagory">
+        <ion-option *ngFor="let state of statelist" [value]="state.ID" (ionSelect)="selectEmployee($event, state)">{{state.Value}}</ion-option>
+      </ion-select>
+      
+  </ion-item> -->
+  
+  <form  [formGroup]="productForm"  (ngSubmit)="onProductSubmit()">
+    <ion-item>
+      <ion-label floating>
+        <ion-icon name="logo-buffer" item-start class="text-primary"></ion-icon>
+        Catagory</ion-label>
+      <ion-select  formControlName="catid"  >
+        <ion-option *ngFor="let state of statelist" value="{{state.ID}}">{{state.Value}} </ion-option>
+    </ion-select> 
+    </ion-item>
+    <ion-item>
+      <ion-label floating>
+        <ion-icon name="logo-buffer" item-start class="text-primary"></ion-icon>
+        Name</ion-label>
+      <ion-input type="text" formControlName="ProductName"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>
+        <ion-icon name="logo-buffer" item-start class="text-primary"></ion-icon>
+        Code</ion-label>
+      <ion-input type="text" formControlName="Code" ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>
+        <ion-icon name="ios-film" item-start class="text-primary"></ion-icon>
+        Quantity</ion-label>
+      <ion-input type="number" formControlName="City" ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>
+        <ion-icon name="ios-grid" item-start class="text-primary"></ion-icon>
+        Weight</ion-label>
+      <ion-input type="text" formControlName="Weights"></ion-input>
+    </ion-item>
+      
+    <ion-item>
+      <ion-label floating>
+        <ion-icon name="card" item-start class="text-primary"></ion-icon>
+        Price</ion-label>
+      <ion-input type="number" formControlName="Price"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>
+        <ion-icon name="ios-copy" item-start class="text-primary"></ion-icon>
+        Description</ion-label>
+      <ion-input type="text" formControlName="Description"></ion-input>
+    </ion-item>
+   <ion-row>
+    <ion-col>
+      <button ion-button color="custom" block type="submit" [disabled]="!productForm.valid">Submit</button>
+    </ion-col>
+  </ion-row>
+  </form>
+  
+</ion-content>
+
+<ion-footer>
+    <footer></footer>
+</ion-footer>

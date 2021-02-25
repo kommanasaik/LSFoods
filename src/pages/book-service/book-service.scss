@@ -1,0 +1,160 @@
+page-book-service {
+    .searchbar-md .searchbar-input{
+        border-radius:20px;
+    }
+    .searchbar-ios .searchbar-input{
+        border-radius:20px;
+    }
+    // .col{
+    //     padding: 0px;
+    // }
+    // .card-header-md {
+    //     padding: 0px;
+    // }
+    // .card-content-md{
+    //     padding: 0px;
+    //     text-align: center;
+    // }
+    #ioncontentd .scroll-content {
+        margin-top: 120px !important;
+        border: 10px solid #b8860b;
+        margin-bottom: 81px;
+    }
+    input.searchbar-input {
+        border-radius: 1px !important;
+    }
+    page-book-service ion-select.select.select-md.ng-untouched.ng-pristine.ng-valid {
+      max-width: none !important;
+  } 
+    ion-searchbar {
+        ::placeholder{
+            color:#b8860b !important;
+            font-weight: bold;
+            text-align: center;
+            font-size: 18px;
+        }
+    }
+    .swiper-pagination-bullet {
+        background-color: #fff;
+      }
+      .floating-buttons {
+        z-index: 1;
+        width: 100%;
+        bottom: 0;
+        position: absolute;
+        margin-bottom: 50px;
+        transition: all .4s linear;
+        // background-color: $base-color-transparent;
+      }
+      .floating-buttons button {
+        color: white;
+        min-height: 7vh;
+        text-transform: none;
+        font-size: 1.4em;
+        font-weight: bold;
+        background: rgba(49, 161, 216, 0.67);
+      }
+      .slide-background {
+        background-size: cover !important;
+        background-position: center;
+        background-repeat: no-repeat;
+        border-color: transparent;
+      }
+      .toolbar-background {
+        border-color: transparent;
+      }
+      .slide-zoom {
+        background: linear-gradient(transparent, rgba(0, 0, 0, 0.4)) !important;
+        height: 100%;
+      }
+      .text-wrapper {
+        width: 100vw;
+        height: 100vh;
+      }
+      .slide-text {
+        position: relative;
+        text-align: center;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+      .slide-title {
+        color: white;
+        font-weight: bold;
+      }
+      .slide-image {
+        max-height: 100%;
+        max-width: 100%;
+        margin: 18px 0;
+      }
+      .last-slide {
+        background-image: url('img/welcome-4.jpg');
+      }
+    .foo {
+        float: left;
+        
+        margin:-3px;
+        width: 78px;
+        height: 78px;
+        border: 1.4px solid #ddc4eb;
+    }
+      
+      .blue {
+        background: #ddc4eb;
+      }
+      
+  
+    .searchbar-input-container {
+        border: 1.4px solid #b8860b;
+        // height: 38px;
+        border-radius: 2px;
+    }
+   .splOffers {
+        
+    height: 40px;
+    background: #b8860b;
+    width: 111%;
+    margin-left: -17px;
+    margin-top: 10px;
+    }
+    #searchBar{
+        width: 90%;
+    margin-left: 18px;
+    margin-top: 10px;
+    border: 1px solid #b8860b;
+    border-radius: 4px;
+    background: none !important;
+    }
+    h2{
+        color: #b8860b;
+        text-align: center;
+    }
+    
+
+    .imgColStyle {
+        display: flex;
+    }
+    ion-card {
+        img {
+            width: auto;
+            margin: 0 auto;
+            // margin: 10px auto;
+            // height: 25vh !important;
+            // width: auto !important;
+            // max-width: 85%;
+            // align-items: center;
+        }
+        .card-header-md {
+                padding: 5px !important;
+            }
+        ion-card-content {
+            padding: 5px !important;
+            text-align: center;
+        
+            ion-card-title {        
+                padding-top: 1.5rem !important;
+                padding-bottom: 1.5rem !important;
+            }
+        }
+    }
+
+}

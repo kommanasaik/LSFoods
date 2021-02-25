@@ -1,0 +1,67 @@
+<ion-header>
+  <header [title]="headerTitle"></header>
+</ion-header>
+
+<ion-content padding>
+  <ion-item>
+    <ion-label>From Date</ion-label>
+    <ion-datetime displayFormat="YYYY-MM-DD" [(ngModel)]="fromdate" placeholder="Select Date">
+    </ion-datetime>
+  </ion-item>
+    <ion-item>
+    <ion-label>To Date</ion-label>
+    <ion-datetime displayFormat="YYYY-MM-DD" [(ngModel)]="todate" placeholder="Select Date">
+    </ion-datetime>
+  </ion-item>
+
+
+  <br>
+  <button ion-button block color="custom" (click)="submitDate()" [disabled]="  !fromdate || !todate">Submit</button>
+
+  <div>
+    <ion-grid *ngFor="let s of products">
+      <ion-card>
+        <ion-card-content>
+         
+          <ion-row>
+            <ion-col col-6>
+              {{s.OrderNo}}
+            </ion-col>
+            <ion-col col-1>
+              -
+            </ion-col>
+            <ion-col col-5>
+              {{s.OrderAmount}}
+              
+            </ion-col>
+          </ion-row>
+
+          <!-- <ion-row>
+            <ion-col col-4>
+              Order Date
+            </ion-col>
+            <ion-col col-1>
+              :
+            </ion-col>
+            <ion-col col-7>
+              {{s.OrderDate}}
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-4>
+              Order Amount
+            </ion-col>
+            <ion-col col-1>
+              :
+            </ion-col>
+            <ion-col col-7>
+
+            </ion-col>
+          </ion-row> -->
+        </ion-card-content>
+      </ion-card>
+      
+    </ion-grid>
+  </div>
+
+</ion-content>

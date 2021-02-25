@@ -1,0 +1,68 @@
+<ion-header>
+  <header [title]="headerTitle"></header>
+</ion-header>
+
+<ion-content padding>
+  <form [formGroup]="profileForm" (ngSubmit)="startUploading()">
+      <img src={{profileImage}}>
+    <ion-item>
+      <ion-label floating>Name</ion-label>
+      <ion-input type="text" formControlName="name"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Phone</ion-label>
+      <ion-input type="number" formControlName="phone" disabled></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Alt Phone</ion-label>
+      <ion-input type="text" formControlName="mobile"></ion-input>
+    </ion-item>
+      <ion-item>
+        <ion-label>Gender</ion-label>
+        <ion-select formControlName="gender">
+          <ion-option value="M">Male</ion-option>
+          <ion-option value="F">Female</ion-option>
+        </ion-select>
+      </ion-item>
+    <ion-item>
+      <ion-label floating>Email</ion-label>
+      <ion-input type="email" formControlName="email"></ion-input>
+    </ion-item>
+    <br>
+    <button ion-button type="button" (click)="getCurrentLocation()" clear>
+        <ion-icon name="locate"></ion-icon>&nbsp;
+        Use current Location</button>
+   
+      <br>
+    <ion-item>
+      <ion-label floating>Address</ion-label>
+      <ion-textarea formControlName="address"></ion-textarea>
+    </ion-item>
+    <div>
+      {{text}}
+      <div style="text-align:center">
+        <img style="height: 200px;" [src]="previewUrl" />
+      </div>
+      
+    </div>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <button ion-button block icon-left color="medium" type="button" (click)="getPicture()">
+            <ion-icon name="images"></ion-icon>
+            Browse
+          </button>
+        </ion-col>
+        <ion-col>
+          <button ion-button color="custom" block type="submit" [disabled]="!profileForm.valid">Submit</button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <br>
+    
+  </form>
+</ion-content>
+
+<ion-footer>
+    <footer></footer>
+</ion-footer>

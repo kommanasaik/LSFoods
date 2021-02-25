@@ -1,0 +1,121 @@
+  <ion-header>
+
+    <ion-navbar color="custom">
+      <button style="color: white;font-size: 25px;" ion-button clear float-left (click)="backPage()" color="custom">
+        <ion-icon name="arrow-round-back"></ion-icon>
+      </button>
+      <ion-title style="margin-top: 10px;color: white;">Bill Details</ion-title>
+    </ion-navbar>
+
+  </ion-header>
+<ion-content padding="'true'" class="has-header">
+
+
+  <div *ngFor="let item of cart">
+    <ion-row>
+      <ion-col col-4>
+        <ion-icon style="font-size: 1.2rem;color: green;margin-bottom: 2px;" name="ios-disc"></ion-icon>
+        {{item.Name}}
+      </ion-col>
+      <ion-col col-8>
+        <span style="float: right;">{{item.ItemQuantity}} x {{item.Price | currency:'INR'}} =
+          <strong>{{ item.ItemQuantity * item.Price | currency:'INR' }}</strong>
+        </span>
+      </ion-col>
+    </ion-row>
+  </div>
+  <hr class="new3">
+  <ion-row style="position:absolute;right: 18px;">
+    <p>Total ( {{totalquantity}} ) =
+      <strong>{{totalbillamount | currency:'INR'}}</strong>
+    </p>
+  </ion-row>
+  
+  <br>
+
+     
+      <ion-row style="margin-top: 50px;">
+        <ion-col>
+          <ion-label style="text-align: center;font-size: 20px;font-weight: 500;color: #be901f;">Payment Mode</ion-label>
+          <ion-list inset class="no-border" style="margin: 0px;">
+            
+            <ion-item style="padding-left: 0px;border: 3px solid #d9d1d1;border-radius: 5px;">
+              <ion-select id="ions" [(ngModel)]="signup.state" style="width: 100% !important;max-width:none !important ;" placeholder="Select Payment Mode">
+                <ion-option *ngFor="let state of statelist" [value]="state.state_id" (ionSelect)="selectEmployee($event, state)">{{state.state_name}}</ion-option>
+              </ion-select>
+              
+            </ion-item>
+    
+          </ion-list>
+        </ion-col>
+      </ion-row>
+   
+  <div *ngIf="hidden">
+    <form [formGroup]="registerForm" (ngSubmit)="onRegisterSubmit()">
+
+      <ion-row>
+        <ion-col>
+          <span>Name</span>
+          <ion-list inset class="no-border" style="margin: 0px;">
+            <ion-item style="height: 4rem; padding-left: 0px;border: 3px solid #d9d1d1;border-radius: 5px;">
+              <ion-input type="text" formControlName="FullName"></ion-input>
+            </ion-item>
+  
+          </ion-list>
+        </ion-col>
+      </ion-row>
+  
+      <ion-row>
+        <ion-col>
+          <span>Email</span>
+          <ion-list inset class="no-border" style="margin: 0px;">
+            <ion-item style="height: 4rem; padding-left: 0px;border: 3px solid #d9d1d1;border-radius: 5px;">
+              <ion-input type="text" formControlName="Email"></ion-input>
+            </ion-item>
+  
+          </ion-list>
+        </ion-col>
+      </ion-row>
+  
+      <ion-row>
+        <ion-col>
+          <span>Phoneno</span>
+          <ion-list inset class="no-border" style="margin: 0px;">
+            <ion-item style="height: 4rem; padding-left: 0px;border: 3px solid #d9d1d1;border-radius: 5px;">
+              <ion-input type="text" formControlName="Phoneno"></ion-input>
+            </ion-item>
+  
+          </ion-list>
+        </ion-col>
+      </ion-row>
+     
+      <ion-row>
+        <ion-col>
+          <span>Address</span>
+          <ion-list inset class="no-border" style="margin: 0px;">
+            <ion-item style="padding-left: 0px;border: 3px solid #d9d1d1;border-radius: 5px;">
+              <ion-textarea type="text" formControlName="Address"></ion-textarea>
+              
+            </ion-item>
+  
+          </ion-list>
+        </ion-col>
+      </ion-row>
+      <div id="btnsubmits" 
+        style="padding: 5px;; width: 100%;">
+        <button ion-button block tappable style="background-color: #b8860b;">
+          CHECK OUT
+        </button>
+      </div>
+      
+    </form>
+  </div>
+
+  <div *ngIf="!hidden" id="btnsubmit" [ngStyle]="{'display':cart.length>0 ? 'inline': 'none'}"
+    style="padding: 5px;; width: 100%;">
+    <button ion-button block tappable style="background-color: #b8860b;" (click)="proceedtocheckout()">
+      CHECK OUT
+    </button>
+  </div>
+
+</ion-content>

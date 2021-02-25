@@ -1,0 +1,39 @@
+<ion-header>
+  <header [title]="headerTitle"></header>
+</ion-header>
+
+<ion-content padding>
+  <form  [formGroup]="productForm"  (ngSubmit)="onProductSubmit()">
+    <ion-item>
+      <ion-label floating>
+        <ion-icon name="logo-buffer" item-start class="text-primary"></ion-icon>
+        Name</ion-label>
+      <ion-input type="text" formControlName="ProductName"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>
+        <ion-icon name="ios-closed-captioning" item-start class="text-primary"></ion-icon>
+        Code</ion-label>
+      <ion-input type="number" formControlName="Code" ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>
+        <ion-icon name="ios-closed-captioning" item-start class="text-primary"></ion-icon>
+        Amount</ion-label>
+      <ion-input type="number" formControlName="Amount" ></ion-input>
+    </ion-item>
+  
+    <ion-item>
+      <ion-label floating>
+        <ion-icon name="ios-copy" item-start class="text-primary"></ion-icon>
+        Description</ion-label>
+      <ion-input type="text" formControlName="Description"></ion-input>
+    </ion-item>
+   <ion-row>
+    <ion-col>
+      <button ion-button color="custom" block type="submit" [disabled]="!productForm.valid">{{title}}</button>
+    </ion-col>
+  </ion-row>
+  </form>
+  
+</ion-content>

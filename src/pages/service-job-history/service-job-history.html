@@ -1,0 +1,69 @@
+<ion-header>
+  <header [title]="headerTitle"></header>
+  <!-- <ion-searchbar style="margin-top: 4px;width: 90%;border-radius: 5px;margin-left: 20px;background: none !important;" (ionCancel)="onCancel($event)"  placeholder="Search for Services" (ionInput)="getItemslist($event)"></ion-searchbar> -->
+</ion-header>
+  
+<ion-content padding style="
+         background: #f4f4f4;
+">
+
+
+  <div>
+    <ion-grid *ngFor="let s of products" (click)="navigateViewpage(s)">
+      <ion-card>
+        <ion-card-content>
+          <ion-row style="right: 0;
+          margin: auto;
+          position: absolute;">
+            <ion-col col-12>
+              <button style="font-size: 25px;" ion-button clear float-left (click)="navigateViewpage(s)" color="custom">
+                <ion-icon name="md-eye"></ion-icon>
+              </button>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col col-4>
+              Order Id
+            </ion-col>
+            <ion-col col-1>
+              :
+            </ion-col>
+            <ion-col col-7>
+              {{s.OrderID}}
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col col-4>
+              Order Date
+            </ion-col>
+            <ion-col col-1>
+              :
+            </ion-col>
+            <ion-col col-7>
+              {{s.OrdeDateStr }}
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-4>
+              Total amount
+            </ion-col>
+            <ion-col col-1>
+              :
+            </ion-col>
+            <ion-col col-7>
+              {{s.TotalAmount | currency:'INR'}}
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
+      
+    </ion-grid>
+  </div>
+
+</ion-content>
+
+<ion-footer>
+  <footer></footer>
+</ion-footer>

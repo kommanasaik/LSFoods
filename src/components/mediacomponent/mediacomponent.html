@@ -1,0 +1,45 @@
+
+
+
+<ion-grid *ngIf="!hideAttachmentButtons">
+  <ion-row>
+    <ion-col col-3>
+      <img class="imgHeight" src="assets/images/camera.png" (click)="getPicture()">
+    </ion-col>
+    <ion-col col-1>
+      <p>or</p>
+    </ion-col>
+    <ion-col col-3>
+      <img class="imgHeight" src="assets/images/video.png" (click)="captureVideo()">
+    </ion-col>
+    <ion-col col-1>
+      <p>or</p>
+    </ion-col>
+    <ion-col col-3>
+      <img (click)="startRecord()" src="assets/images/record.png" *ngIf="!recording">
+      <img (click)="stopRecord()" src="assets/images/stoprecord.png" *ngIf="recording">
+    </ion-col>
+  </ion-row>
+</ion-grid>
+
+<div>
+    <img src="assets/images/recordedaudio.png" *ngIf="capturedAudio">
+    <img src="assets/images/recordedvideo.png" *ngIf="capturedVideo">
+    <p>{{audioText}}</p>
+  <h2>{{text}}</h2>
+  <div style="text-align:center" *ngIf="previewUrl">
+    <img style="height: 200px;" [src]="previewUrl" />
+  </div>
+</div>
+
+<div *ngIf="!capturedUrl && !capturedVideo && !capturedAudio">
+  <h2>(OR)</h2>
+  <ion-item>
+    <ion-label stacked>Send the description</ion-label>
+    <ion-textarea placeholder="Write description here" (ionChange)="checkDescription()" [(ngModel)]="description"></ion-textarea>
+  </ion-item>
+</div>
+<br>
+<button ion-button color="custom" block type="submit" [disabled]="!capturedUrl && !capturedVideo && !capturedAudio && !description"
+  (click)="startUploading()">Submit</button>
+<br>

@@ -1,0 +1,40 @@
+
+<ion-content padding class="transparent-header login-background" >
+ 
+  <div id="divMain"  padding style="margin: auto;padding-top: 100px;">
+    <form [formGroup]="loginForm" (ngSubmit)="login()">
+      <ion-row>
+        <ion-col>
+          <span>Mobile No/Email</span>
+            <ion-item style="height: 4rem;padding-left: 0px;border: 3px solid #bdbdbd;border-radius: 5px;">
+              <ion-input   type="text" formControlName="Username"></ion-input>
+            </ion-item>
+            
+        </ion-col>
+      </ion-row>
+    <ion-row>
+      <ion-col>
+          <span>Password</span>
+         
+          <ion-item style="height: 4rem;padding-left: 0px;border: 3px solid #bdbdbd;border-radius: 5px;">
+            <ion-input  type="text" formControlName="Password"></ion-input>
+          </ion-item>
+          
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <button ion-button class="login-button" style="width: 280px;border-radius: 5px;font-size: 18px;height: 4rem;color: white !important;" type="submit">LOGIN &nbsp;&nbsp; <ion-icon style="font-size: 35px;
+          font-weight: bold;"></ion-icon>
+        </button>
+      </ion-col>
+    </ion-row>
+    
+    </form>
+    <div text-center margin-top  style="float: right;margin-right: 12px;">
+      <span ion-text color="custom" tappable (click)="register()">New here? <strong>Sign up</strong></span>
+  
+    </div>
+  </div>
+ 
+</ion-content>

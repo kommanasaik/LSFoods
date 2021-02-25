@@ -1,0 +1,7 @@
+{
+  "name": "Quick-Worker",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular"
+}

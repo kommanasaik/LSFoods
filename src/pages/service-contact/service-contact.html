@@ -1,0 +1,59 @@
+<ion-header>
+  <header [title]="headerTitle"></header>
+</ion-header>
+
+<ion-content padding>
+ 
+<ion-row style="float: right;">
+  <ion-col>
+    <p>Total Sales-
+      <strong>{{totalval  | currency:'INR'}}</strong>
+    </p>
+  </ion-col>
+</ion-row>
+
+    <ion-grid *ngFor="let s of products">
+      <ion-card>
+        <ion-card-content>
+        
+          <ion-row>
+            <ion-col col-4>
+             Order ID
+            </ion-col>
+            <ion-col col-1>
+              :
+            </ion-col>
+            <ion-col col-7>
+              {{s.OrderID}}
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col col-4>
+              Order Date
+            </ion-col>
+            <ion-col col-1>
+              :
+            </ion-col>
+            <ion-col col-7>
+              {{s.OrderDate | date:'short'}}
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-4>
+              Order Amount
+            </ion-col>
+            <ion-col col-1>
+              :
+            </ion-col>
+            <ion-col col-7>
+              {{s.OrderAmount}}
+
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
+      
+    </ion-grid>
+
+</ion-content>

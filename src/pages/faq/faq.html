@@ -1,0 +1,65 @@
+<ion-header>
+  <header [title]="headerTitle"></header>
+  <!-- <ion-searchbar style="margin-top: 4px;width: 90%;border-radius: 5px;margin-left: 20px;background: none !important;" (ionCancel)="onCancel($event)"  placeholder="Search for Items" (ionInput)="getItemslist($event)"></ion-searchbar> -->
+</ion-header>
+  
+<ion-content padding  style="
+background: #f4f4f4;
+">
+
+
+  <div>
+    <ion-grid *ngFor="let s of products">
+      <ion-card>
+        <ion-card-content>
+          <ion-row>
+            
+            <ion-col col-12>
+              <ion-icon (click)="gotoedit(s.ID)" name="md-open" role="img" class="icon icon-md ion-ios-open" aria-label="add" style="font-size: 20px;color: #b8860b;float: right;margin-left: 15px;"></ion-icon>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-4>
+             Catagory
+            </ion-col>
+            <ion-col col-1>
+              :
+            </ion-col>
+            <ion-col col-7>
+              {{s.Value}}
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col col-4>
+              Code
+            </ion-col>
+            <ion-col col-1>
+              :
+            </ion-col>
+            <ion-col col-7>
+              {{s.Code}}
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-4>
+              Description
+            </ion-col>
+            <ion-col col-1>
+              :
+            </ion-col>
+            <ion-col col-7>
+              Description
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
+      
+    </ion-grid>
+  </div>
+
+</ion-content>
+
+<ion-footer>
+  <footer></footer>
+</ion-footer>

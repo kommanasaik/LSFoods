@@ -1,0 +1,68 @@
+<ion-header>
+
+  <ion-navbar color="custom">
+    <button style="color: white;font-size: 25px;" ion-button clear float-left (click)="backPage()" color="custom">
+      <ion-icon name="arrow-round-back"></ion-icon>
+    </button>
+    <ion-title style="margin-top: 10px;color: white;">Order Details</ion-title>
+  </ion-navbar>
+
+</ion-header>
+<ion-content padding style="background: #f4f4f4;">
+
+
+  <div>
+    <ion-card >
+      <ion-card-content>
+        <ion-label style="color: #be901f;font-size: 16px;font-weight: 600;margin-left: 5px;"> Order details</ion-label>
+        <ion-row>
+          <ion-col col-4>
+            Order Id
+          </ion-col>
+          <ion-col col-1>
+            :
+          </ion-col>
+          <ion-col col-7>
+            {{OrderID}}
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-4>
+            Date
+          </ion-col>
+          <ion-col col-1>
+            :
+          </ion-col>
+          <ion-col col-7>
+            {{OrdeDateStr}}
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col col-4>
+            Total Amount
+          </ion-col>
+          <ion-col col-1>
+            :
+          </ion-col>
+          <ion-col col-7>
+            {{ProductAmount | currency:'INR'}}
+          </ion-col>
+        </ion-row>
+        <ion-label style="color: #be901f;font-size: 16px;font-weight: 600;margin-left: 5px;"> View Items</ion-label>
+
+        <ion-row  *ngFor="let s of products">
+          <ion-col col-12>
+            {{s.ProductName}} ({{s.ProductQuantity}})
+          </ion-col>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+  
+  </div>
+
+</ion-content>
+
+<ion-footer>
+  <footer></footer>
+</ion-footer>

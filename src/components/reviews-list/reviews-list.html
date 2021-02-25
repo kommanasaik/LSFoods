@@ -1,0 +1,98 @@
+  <ion-grid *ngFor="let r of reviewsList">
+  <ion-card>
+    <ion-card-content>
+      <ion-row *ngIf="options=='myreviews'">
+        <ion-col col-4>
+          Job Id
+        </ion-col>
+        <ion-col col-1>
+          :
+        </ion-col>
+        <ion-col col-7 (click)="openJobDetails(r.job_id)">
+          <span>{{r.job}}</span>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf='r.name'>
+        <ion-col col-4>
+          Job Id
+        </ion-col>
+        <ion-col col-1>
+          :
+        </ion-col>
+        <ion-col col-7 (click)="openJobDetails(r.job_id)">
+          <span>{{r.job}}</span>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf='r.sub_service'>
+        <ion-col col-4>
+          Service
+        </ion-col>
+        <ion-col col-1>
+          :
+        </ion-col>
+        <ion-col col-7 (click)="openJobDetails(r.job_id)">
+          <span>{{r.job}}</span>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="options=='myreviews'">
+        <ion-col col-4>
+          Technician Rating
+        </ion-col>
+        <ion-col col-1>
+          :
+        </ion-col>
+        <ion-col col-7>
+          <ionic3-star-rating activeIcon="ios-star"  fontSize = "22px" defaultIcon="ios-star-outline" activeColor="#b8860b" defaultColor="#b8860b"
+            readonly="true" rating="{{r.tech_rating}}">
+          </ionic3-star-rating>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="options=='myreviews'">
+        <ion-col col-4>
+          Technician Description
+        </ion-col>
+        <ion-col col-1>
+          :
+        </ion-col>
+        <ion-col col-7 (click)="openJobDetails(r.job_id)">
+          <span>{{r.job}}</span>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-4>
+          Service Rating
+        </ion-col>
+        <ion-col col-1>
+          :
+        </ion-col>
+        <ion-col col-7>
+          <ionic3-star-rating activeIcon="ios-star"  fontSize = "22px" defaultIcon="ios-star-outline" activeColor="#b8860b" defaultColor="#b8860b"
+            readonly="true" rating="{{r.service_rating}}">
+          </ionic3-star-rating>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-4>
+          Service Description
+        </ion-col>
+        <ion-col col-1>
+          :
+        </ion-col>
+        <ion-col col-7>
+          {{r.service_description}}
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-4>
+          Date
+        </ion-col>
+        <ion-col col-1>
+          :
+        </ion-col>
+        <ion-col col-7>
+          {{r.now}}
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+</ion-grid>

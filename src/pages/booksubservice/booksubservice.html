@@ -1,0 +1,169 @@
+<ion-header color="custom">
+ 
+  <ion-navbar>
+    <button style="color: #b8860b;font-size: 25px;" ion-button clear float-left (click)="backSubServicePage()" color="custom">
+      <ion-icon name="arrow-round-back"></ion-icon>
+    </button>
+    <ion-title style="margin-top: 10px;color: #b8860b;">Service Preferences</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <div style="height: 50px;background-color: #b8860b;left: 0;top: 0;position: absolute;z-index: 10;display: block;width: 100%;"> 
+    <!-- <ion-card-content> -->
+      <ion-row>
+        <ion-col>
+      <ion-label style="text-align: center;color: white;font-size: 25px;margin:auto;text-transform: capitalize;">
+        {{subServiceName}}
+      </ion-label>
+    </ion-col>
+    </ion-row>
+    <!-- </ion-card-content> -->
+  </div>
+  <ion-row>
+    <ion-col>
+      <ion-label style="color: #b8860b;text-align: center;font-size: 18px;font-weight: 500;margin-top: 30px;">
+        Leave a message
+      </ion-label>
+    </ion-col>
+  </ion-row>
+  <!-- <ion-row>
+    <ion-col>
+      <div style="border-top: 6px solid #b8860b;width: 420px;margin-left: -23px;margin-top: -20px;height: 100px;background-color: #ddc4eb;"> 
+  
+          <ion-row>
+            <ion-col>
+              <ion-label style="padding: 10px;text-align: center;font-size: 20px;margin-top: -7px;">Picture</ion-label>
+            </ion-col>
+            <ion-col>
+              <ion-label style="padding: 10px;text-align: center;font-size: 20px;margin-top: -7px;float: left;">Voice</ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-label style="text-align: center;font-size: 20px;margin-top: -7px;">Video</ion-label>
+            </ion-col>
+            <ion-col>
+              <ion-label style="text-align: center;font-size: 20px;margin-top: -7px;float: left;margin-left: 10px;">Text</ion-label>
+            </ion-col>
+          </ion-row>
+       
+        </div>
+      </ion-col>
+    </ion-row> -->
+    <div id="map_canvas">
+      <table>
+        <tr>
+          <td><input ion-input type="text" [(ngModel)]="customLocation" #search_address >
+            <button ion-button color="custom" (click)="onButton1_click()">Search</button></td>
+        </tr>
+      </table>
+    </div>
+       <div style="left: 0;position: absolute;z-index: 10;display: block;width: 100%;margin-top: -5px;;height: 200px;background-color: #b8860b;"> 
+            <ion-grid style="background: white;width: 90%;margin-top: 10px;height: 180px;border-radius: 10px;">
+              <ion-row style="margin-top: -5px;margin-left: -5px;width: 104%;">
+                <ion-col col-6 style="height: 90px;border: 1px solid #b8860b;">
+                  
+            <img  src="https://veerankis.org/quickworker/uploads/services/faceial-492.png" style="width: 160px;height: 80px;">
+
+                </ion-col>
+                <ion-col col-6 style="height: 90px;border: 1px solid #b8860b;">
+            <img  src="https://veerankis.org/quickworker/uploads/services/faceial-492.png" style="width: 160px;height: 80px;">
+                  
+                </ion-col>
+               
+              </ion-row>
+              <ion-row  style="margin-left: -5px;;width: 104%">
+                <ion-col col-6 style="height: 90px;border: 1px solid #b8860b;">
+            <img  src="https://veerankis.org/quickworker/uploads/services/faceial-492.png" style="width: 160px;height: 80px;">
+                  
+                </ion-col>
+                <ion-col col-6 style="height: 90px;border: 1px solid #b8860b;">
+            <img  src="https://veerankis.org/quickworker/uploads/services/faceial-492.png" style="width: 160px;height: 80px;">
+                  
+                </ion-col>
+             
+              </ion-row>
+            </ion-grid>
+            <div>
+              <ion-row>
+                <ion-col>
+                  <ion-label style="color: #b8860b;text-align: center;font-size: 18px;font-weight: 500;margin-top: 10px;">
+                    Location Information
+                  </ion-label>
+                </ion-col>
+              </ion-row>
+            </div>
+            <div style="height: 100px;background-color: #b8860b;left: 0;position: absolute;z-index: 10;display: block;width: 100%;margin-top: -17px;"> 
+              
+                <ion-row>
+                  <ion-col>
+              
+      <button id="btnOtp" ion-button  block type="submit" style="width: 200px;margin-left: 85px;background: #ddc4eb;border-radius: 25px;height: 30px;
+      margin-top: 10px;"><span style="color: black;" (click)="getCurrentLocation()" clear>Default Location</span></button>
+              </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col>
+            
+    <button id="btnOtp" ion-button  block type="submit" style="width: 200px;margin-left: 85px;background: #ddc4eb;border-radius: 25px;height: 30px;
+    margin-top: -2px;"><span style="color: black;">Select in Google Map</span></button>
+            </ion-col>
+            </ion-row>
+            <div style="height: 100px;left: 0;position: absolute;z-index: 10;display: block;width: 100%;margin-top: 0px;"> 
+       <ion-row>
+        <ion-col>
+         
+      </ion-col>      
+      </ion-row>
+            </div>
+            <div style="height: 30px;background-color: #b8860b;left: 0;position: absolute;z-index: 10;display: block;width: 100%;margin-top: 298px;"> 
+            </div>
+           
+            <div style="height: 180px;background-color: #ddc4eb;left: 0;position: absolute;z-index: 10;display: block;width: 100%;margin-top:330px;"> 
+           <ion-label style="color: #b8860b;font-size: 16px;font-weight: 500;margin-left: 10px;">Address details:dasdadasdadadasasdasdasdasdadaadasdasdadasdasdadasdasdadadasdasdadas</ion-label>
+    
+           <div style="height: 30px;background-color: #b8860b;left: 0;position: absolute;z-index: 10;display: block;width: 100%;margin-top: 138px;"> 
+          </div>
+          <div style="margin-top: 170px;">
+            <ion-row style="border-bottom: 30px solid #b8860b;">
+              <ion-col>
+                <ion-label style="color: #b8860b;text-align: center;font-size: 18px;font-weight: 500;">
+                  Choose Time Slot
+                </ion-label>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <ion-item>
+                  <ion-label style="color: #b8860b;">Select Date</ion-label>
+                  <ion-datetime pickerFormat="YYYY-MM-DDTHH:mm:ssTZD" displayFormat="DD MMM YYYY" (ionChange)="onDateSelected()" pickerFormat="DD MMM YYYY" [min]="minDate" [(ngModel)]="selectedDate"></ion-datetime>
+                </ion-item>
+              
+                <ion-item>
+                  <ion-label  style="color: #b8860b;" floating>From Time</ion-label>
+                  <ion-datetime pickerFormat="HH:mm" displayFormat="hh:mm a" [min]="minTime" (ionChange)="validateTime()" [(ngModel)]="fromTime"></ion-datetime>
+                </ion-item>
+                <br>
+                <ion-item>
+                  <ion-label  style="color: #b8860b;" floating>To Time</ion-label>
+                  <ion-datetime pickerFormat="HH:mm" displayFormat="hh:mm a" [min]="minTime" (ionChange)="validateTime()" [(ngModel)]="toTime"></ion-datetime>
+                </ion-item>
+                <p id="timeError" style="color:red"></p>
+                <br>
+                <button ion-button block style="width: 70%;margin-left: 55px;border-radius: 20px;background: #b8860b;" (click)="submitDate()" [disabled]="!selectedDate || !fromTime || !toTime">Submit</button>
+          
+              </ion-col>
+            </ion-row>
+          </div> 
+            </div>
+          
+            </div>
+        
+      </div>
+      
+          
+</ion-content>
+<ion-footer>
+  <footer></footer>
+</ion-footer>

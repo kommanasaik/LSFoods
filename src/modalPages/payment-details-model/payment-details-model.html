@@ -1,0 +1,19 @@
+
+<ion-header>
+  <ion-navbar color="custom">
+    <ion-title>Payment Details</ion-title>
+    <ion-buttons end>
+        <button ion-button (click)="closeModal()">
+          <ion-icon name="close"></ion-icon>
+        </button>
+      </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+<ion-list *ngFor="let j of jobCharges">
+  Desctiption:{{j.description}}<br>
+  Amount:{{j.amount}}<br>
+  Date:{{j.date}}
+</ion-list>
+</ion-content>

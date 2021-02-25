@@ -1,0 +1,123 @@
+<ion-content padding>
+  <div padding-horizontal text-center class="animated fadeInDown">
+    <div class="logo" style="width: 60%;height: 100px;"></div>
+    <h2 ion-text class="text-primary">
+
+    </h2>
+  </div>
+  <form [formGroup]="registerForm" (ngSubmit)="onRegisterSubmit()">
+    <ion-label style="font-size: 20px;margin-left: 8px;color: #b8860b;">Registation</ion-label>
+    <ion-row>
+      <ion-col>
+        <span>Name</span>
+        <ion-list inset class="no-border" style="margin: 0px;">
+          <ion-item style="height: 4rem; padding-left: 0px;border: 3px solid #d9d1d1;border-radius: 5px;">
+            <ion-input type="text" formControlName="FullName"></ion-input>
+          </ion-item>
+
+        </ion-list>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <span>Email</span>
+        <ion-list inset class="no-border" style="margin: 0px;">
+          <ion-item style="height: 4rem; padding-left: 0px;border: 3px solid #d9d1d1;border-radius: 5px;">
+            <ion-input type="text" formControlName="Email"></ion-input>
+          </ion-item>
+
+        </ion-list>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <span>Phoneno</span>
+        <ion-list inset class="no-border" style="margin: 0px;">
+          <ion-item style="height: 4rem; padding-left: 0px;border: 3px solid #d9d1d1;border-radius: 5px;">
+            <ion-input type="text" formControlName="Phoneno"></ion-input>
+          </ion-item>
+
+        </ion-list>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <span>Password</span>
+        <ion-list inset class="no-border" style="margin: 0px;">
+          <ion-item style="height: 4rem; padding-left: 0px;border: 3px solid #d9d1d1;border-radius: 5px;">
+            <ion-input type="text" formControlName="Password"></ion-input>
+          </ion-item>
+
+        </ion-list>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <span>Country</span>
+        <ion-list inset class="no-border" style="margin: 0px;">
+          <ion-item style="height: 4rem;padding-left: 0px;border: 3px solid #d9d1d1;border-radius: 5px;">
+            <ion-input type="text" formControlName="Country"></ion-input>
+          </ion-item>
+
+        </ion-list>
+      </ion-col>
+      <ion-col>
+        <span>State</span>
+        <ion-list inset class="no-border" style="margin: 0px;">
+          <ion-item style="height: 4rem; padding-left: 0px;border: 3px solid #d9d1d1;border-radius: 5px;">
+            <ion-input type="text" formControlName="State"></ion-input>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+
+
+    <ion-row>
+      <ion-col>
+        <span>City</span>
+        <ion-list inset class="no-border" style="margin: 0px;">
+          <ion-item style="height: 4rem; padding-left: 0px;border: 3px solid #d9d1d1;border-radius: 5px;">
+            <ion-input type="text" formControlName="City"></ion-input>
+          </ion-item>
+
+        </ion-list>
+      </ion-col>
+      <ion-col>
+        <span>Pincode</span>
+        <ion-list inset class="no-border" style="margin: 0px;">
+          <ion-item style="height: 4rem; padding-left: 0px;border: 3px solid #d9d1d1;border-radius: 5px;">
+            <ion-input type="text" formControlName="Pin"></ion-input>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <span>Address</span>
+        <ion-list inset class="no-border" style="margin: 0px;">
+          <ion-item style="padding-left: 0px;border: 3px solid #d9d1d1;border-radius: 5px;">
+            <ion-textarea type="text" formControlName="Address"></ion-textarea>
+            
+          </ion-item>
+
+        </ion-list>
+      </ion-col>
+    </ion-row>
+    <div col-6 style="float:left; height: 3.6rem;padding: 5px;">
+      <button ion-button block color="custom" tappable>
+        SIGN UP
+      </button>
+    </div>
+    
+  </form>
+  <div col-6 style="float:right;height: 3.6rem;padding: 5px;">
+    <button ion-button block style="background: white;color: #b8860b;border: 2px solid #B8860B;" (click)="login()" tappable>
+      CANCEL
+    </button>
+
+</div>
+
+</ion-content>

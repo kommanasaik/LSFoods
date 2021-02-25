@@ -1,0 +1,72 @@
+<ion-header>
+    <header [title]="headerTitle"></header>
+</ion-header>
+
+
+<ion-content padding>
+  <ion-row>
+    <ion-col col-3>
+      <img src="assets/images/logo22.png" alt="">
+    </ion-col>
+    <ion-col col-4 style="font-size: 20px;
+    margin-top: 9px;
+    right: -30px;">
+      <strong>LS FOODS</strong>
+    </ion-col>
+    <ion-col col-4 style="margin-top: 13px;
+    right: -60px;">
+      {{myDate  | date: 'dd/MM/yyyy'}}
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col col-12 style=" text-align :center;   color: black;font-size: 14px;font-weight: 500;">
+      <span>Hyderabad</span>
+      <!-- {{username  | uppercase }}
+        
+      ( {{phone}} ) -->
+    </ion-col>
+    <ion-col col-12 style=" text-align :center;   color: black;font-size: 14px;font-weight: 500;">
+      <span>+9199999999</span>
+      <!-- {{username  | uppercase }}
+        
+      ( {{phone}} ) -->
+    </ion-col>
+   
+  </ion-row>
+  <hr class="new3">
+
+  <div *ngFor="let item of cart">
+    <ion-row>
+      <ion-col col-4>
+        <ion-icon style="font-size: 1.2rem;color: green;margin-bottom: 2px;" name="ios-disc"></ion-icon>
+        {{item.Name}}
+      </ion-col>
+      <ion-col col-8>
+        <span style="float: right;">{{item.ItemQuantity}} x {{item.Price | currency:'INR'}} =
+          <strong>{{ item.ItemQuantity * item.Price | currency:'INR' }}</strong>
+        </span>
+      </ion-col>
+    </ion-row>
+  </div>
+  <hr class="new3">
+  <ion-row style="position:absolute;right: 18px;">
+    <p>Total ( {{totalquantity}} ) =
+      <strong>{{totalbillamount | currency:'INR'}}</strong>
+    </p>
+  </ion-row>
+  
+  <br>
+  
+  <div [ngStyle]="{'display':cart.length>0 ? 'inline': 'none'}"
+    style="position: absolute;
+    width: 50%;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;">
+    <button ion-button block tappable style="background-color: #b8860b;" (click)="print()">
+      PRINT
+    </button>
+  </div>
+
+</ion-content>
