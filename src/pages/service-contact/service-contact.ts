@@ -17,7 +17,9 @@ export class ServiceContactPage {
   /**
  * Accessing html element 
  */
-totalval:number;
+hidden:any=false;
+staffid:any;
+totalval:number; 
 headerTitle:any;
 products:any;
   constructor(
@@ -35,17 +37,38 @@ products:any;
 *  Fired after loading constructor
 *  calling getjobDetails and loadMap methods
 */
+
   ionViewDidLoad() {
-    let staffid=localStorage.getItem("user_id");
+    this.staffid=localStorage.getItem("user_id");
+    this.getsalesData()
+  }
+  DayendProcess(){
     this.utils.presentLoading();
-    this.utils.getmusalesReport(staffid).subscribe((Response) => {
+    this.utils.updateDayendProcess(this.staffid).subscribe((Response) => {
+      if(Response.ErrorCode>0){
+    this.utils.presentAlert("Oops", "Dayend Process Completed!");
+    this.getsalesData();
+
+      }
+      else{
+    this.utils.presentAlert("Oops", "Dayend Process Failed!");
+
+      }
+      this.utils.dismissLoading();
+
+    });
+  }
+  getsalesData(){
+    this.utils.presentLoading();
+    this.utils.getmusalesReport(this.staffid).subscribe((Response) => {
       if(Response.length>0){
         this.totalval = Response.map(bill => bill.OrderAmount).reduce((acc, bill) => bill + acc);
         this.products=Response;
       }
       else{
     this.utils.presentAlert("Oops", "No records found!");
-
+    this.products=[];
+    this.hidden=true;
       }
       this.utils.dismissLoading();
 

@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform } from 'ionic-angular';
+import { Nav, Platform,App,IonicApp,AlertController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Storage } from '@ionic/storage';
@@ -42,6 +42,8 @@ export class MyApp {
 *  navigating to perticular page conditionally
 */
   constructor(
+    public app: App,
+
     public platform: Platform,
     public statusBar: StatusBar,
     public splashScreen: SplashScreen,
@@ -49,15 +51,19 @@ export class MyApp {
     public fcm: FCM,
     public networkService: NetworkServiceProvider,
     public utils: UtilsServiceProvider
+    ,public ionicApp: IonicApp,
+    public alertCtrl: AlertController
+
+
   ) {
     this.initializeApp();
 
-    if(localStorage.getItem("user_id")!="" && localStorage.getItem("user_id")!=null){
-      this.rootPage = "BookServicePage"
-    }
-    else{
-      this.rootPage = "IntroductionSliderPage" 
-    }
+      if(localStorage.getItem("user_id")!="" && localStorage.getItem("user_id")!=null){
+        this.rootPage = "BookServicePage"
+      }
+      else{
+        this.rootPage = "IntroductionSliderPage" 
+      }
 
     // this.storage.get('auth').then((auth) => {
 
@@ -90,6 +96,7 @@ export class MyApp {
     if(localStorage.getItem("UserType")!=="S"){
     this.pages = [
       { title: 'Book Order', component: "BookServicePage", icon: "ios-basket" },
+      { title: 'Single Item Entry', component: "SingleentryitemPage", icon: "ios-basket" },
       { title: 'My Orders', component: "ServiceJobHistoryPage", icon: "ios-basket" },
       { title: 'Add Catagory', component: "AllsubservicesPage", icon: "logo-buffer" },
       { title: 'Catagory List', component: "FaqPage", icon: "logo-buffer" },
@@ -97,10 +104,8 @@ export class MyApp {
       { title: 'Items List', component: "ReviewsPage", icon: "ios-color-filter" },
       { title: 'Payments', component: "GoogelmapPage", icon: "card" },
       { title: 'Sales Reports', component: "ScheduleJobPage", icon: "card" },
+      { title: 'Item by Sales Reports', component: "SalesreportbycatPage", icon: "card" },
       { title: 'DayEnd Sales', component: "ServiceContactPage", icon: "card" },
-
-
-
       { title: 'Logout', component: "LoginPage", icon: "md-log-out" },
     ];
   }else{
@@ -143,8 +148,73 @@ export class MyApp {
 
       // });
     });
-  }
+    this.platform.registerBackButtonAction(() => {
+      let nav = this.app.getActiveNav();
+      let view = this.nav.getActive();
+      let page = view ? this.nav.getActive().instance : null;
+      let ready = true;
+      let prevPage;
+      let activePortal = this.ionicApp._loadingPortal.getActive() || this.ionicApp._toastPortal.getActive() || this.ionicApp._overlayPortal.getActive() || this.ionicApp._modalPortal.getActive();
+      if (activePortal) {
+        ready = false;
+        activePortal.dismiss();
+        activePortal.onDidDismiss(() => { ready = true; });
+        return;
+     }
+    if (page && page.isRootPage) {
+        this.myHandlerFunction();
+      }
+      else if (view && view.isOverlay) {
+          this.nav.pop();
+          
+      }
+      if (nav.canGoBack()) { //Can we go back?
+        if(nav.getActive().name=='BookServicePage'){
+          this.myHandlerFunction();
+        }
+       
+        else{
+       
+          this.nav.pop();
+      
+        }
+        }
+         else {
+          if(nav.getActive().name !='BookServicePage')
+          {
+            console.log( this.nav.last());
+            this.nav.pop();
 
+         
+          }  
+          else
+            this.myHandlerFunction() //Exit from app
+        }
+      }, 1);
+
+     
+  }
+  myHandlerFunction() {
+    let alert = this.alertCtrl.create({
+      title: 'Exit?',
+      message: 'Do you want to exit the app?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+          }
+        },
+        {
+          text: 'Exit',
+          handler: () => {
+            this.platform.exitApp();
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
 
     /**
 *  opening perticular page on selecting

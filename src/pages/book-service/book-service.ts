@@ -25,6 +25,8 @@ export class BookServicePage {
   signup={
     state:0
   }
+  catid:any;
+  capturedSnapURL:string="../assets/images/icon.png"
   cartItemCount: BehaviorSubject<number>;
   slideIndex = 0;
   servicesserach = [];
@@ -84,13 +86,14 @@ export class BookServicePage {
     });
   }
   selectEmployee(emp){
-    this.hidden=true
-    let catid=emp
-    this.getProducts(catid);
+    this.catid=emp
+    this.getProducts(this.catid);
 }
   getProducts(catid) {
     this.utils.presentLoading();
     this.bookService.getProducts().subscribe((Response) => {
+    this.hidden=false;
+
       this.getProductResponse = Response;
       this.searchresponse = Response;
       this.searchresponse = Response.filter((item) => {
@@ -105,6 +108,10 @@ export class BookServicePage {
       if (this.cart.length > 0) {
         for (var i = 0; i < this.searchresponse.length; i++) {
           for (var j = 0; j < this.cart.length; j++) {
+            // if(this.cart[j].ImageByteArray===null || this.cart[j].ImageByteArray===undefined){
+            //   this.cart[j].ImageByteArray="../assets/images/noimage.jpg";
+
+            // }
             if (this.searchresponse[i].ID === this.cart[j].ID) {
               this.searchresponse.splice(i, 1);
 
@@ -134,6 +141,8 @@ export class BookServicePage {
       }
       //this.utils.delallcart();
       this.cart = this.searchresponse;
+      // this.cart[0]["ImageByteArray"]="../assets/images/icon.png";
+
       this.searchresponse = this.searchresponse;
       console.log(this.cart);
 
@@ -187,9 +196,11 @@ export class BookServicePage {
 
     this.cart[o]["ProductID"] = this.cart[o].ID;
     this.cart[o]["UserID"] = this.cart[o].userid;
-    this.cart[o]["ItemQuantity"] = this.cart[o].count;
-    this.cart[o]["BillTotalAmout"] = this.cart.reduce((i, j) => i + j.price * j.count, 0);
-  this.cart[o]["BillQuantity"] = billitemquan;
+    this.cart[o]["ItemQuantity"] =Number(this.cart[o].count);
+    this.cart[o]["ItemTotalAmount"] = Number((this.cart[o].count)*(this.cart[o].Price ));
+
+    this.cart[o]["BillTotalAmout"] = Number(this.cart.reduce((i, j) => i + j.price * j.count, 0));
+  this.cart[o]["BillQuantity"] = Number(billitemquan);
   this.cart[o]["userid"]=localStorage.getItem('user_id');
 
 
@@ -210,8 +221,8 @@ export class BookServicePage {
   }
   else{
     this.utils.presentAlert("Oops", "Cart is empty, please buy any product.")
-    let catid="";
-this.getProducts(catid);
+    // let catid="";
+this.getProducts(this.catid);
   }
 }
 }

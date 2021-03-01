@@ -22,6 +22,10 @@ import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 export class BilldetailsPage {
   cart = [];
   hidden=false;
+  hiddendetails=false;
+  custid="";
+  hiddenForm=false;
+  hiddenForm1=true;
   signup={
     state:0
   }
@@ -31,16 +35,29 @@ export class BilldetailsPage {
   },{
     state_id:2,
     state_name:'Credit'
-  }];
+  }
+  ,{
+    state_id:3,
+    state_name:'PhonePay'
+  },{
+    state_id:4,
+    state_name:'GooglePay'
+  },{
+    state_id:5,
+    state_name:'Paytm'
+  }
+];
   custname="";
   custmobile="";
   totalbillamount:number;
   totalquantity:number;
-  
+  custuserid="";
   registerForm:any;
   registerObj:any;
   cartItemCount: BehaviorSubject<number>;
   editdata:any;
+  creditcustname="";
+  creditcustmobile="";
   constructor(
       public authService: AuthServiceProvider,
       public navCtrl: NavController,private fb: FormBuilder, public navParams: NavParams,
@@ -110,11 +127,36 @@ console.log(this.cart);
       selectEmployee(emp){
           if(emp==2){
             this.hidden=true;
+        this.hiddenForm=false;
+
           }
           else{
             this.hidden=false;
-
+            this.hiddenForm1=false;
           }
+      }
+      checkno(){
+        let checckno=this.custid;
+        if(checckno!=""){
+          this.utils.presentLoading();
+   
+    this.utils.getuseraccountdetails(checckno).subscribe((Response) => {
+    console.log(Response);
+    this.utils.dismissLoading();
+      if(Response.UserID){
+        this.hiddenForm1=false;
+        this.hidden=false;
+        this.hiddendetails=true;
+this.custuserid=Response.UserID;
+this.creditcustmobile=Response.MobileNo;
+this.creditcustname=Response.Name;
+      }
+      else{
+        this.hiddenForm=true;
+        this.hidden=false;
+      }
+    });
+        }
       }
       proceedtocheckout() {
         let custname=this.custname;
@@ -125,6 +167,36 @@ console.log(this.cart);
         let itemcount = 0;
         if(paymentmode>0){
           if(paymentmode==2){
+            if(this.custuserid!=""){
+
+              this.utils.presentLoading();
+              if (this.cart.length > 0) {
+                for (var o = 0; o < this.cart.length; o++) {
+                     
+                  this.cart[o]["userid"]=this.custuserid;
+                  }
+               this.utils.ProductTransactions().subscribe((Response) => {
+                  console.log(Response);
+                  if (Response.ErrorCode > 0) {
+                    //this.removeallcart();
+                    
+                    this.cart[0]["username"]=this.creditcustname;
+                    this.cart[0]["phone"]=this.creditcustmobile;
+
+                        
+                        this.navCtrl.setRoot("NotificationsPage",this.cart);
+                        
+                    
+                    this.utils.dismissLoading();
+                  }
+                  else {
+                    this.utils.presentAlert("Oops", "Order Failed, Please try once");
+          
+                  }
+                });
+              }
+            }
+            else{
             this.registerObj = {
               UserType:"",
               UserID:'',
@@ -188,27 +260,27 @@ console.log(this.cart);
 
             }
           }
+          }
           else{
             this.utils.presentLoading();
               if (this.cart.length > 0) {
-               this.utils.ProductTransactions().subscribe((Response) => {
+               this.utils.ProductTransactions(this.cart).subscribe((Response) => {
                   console.log(Response);
-                  if (Response.ErrorCode > 0) {
-                    //this.removeallcart();
+                  // if (Response.ErrorCode > 0) {
                     
-                    this.cart[0]["username"]=localStorage.getItem("user_name");
-                    this.cart[0]["phone"]=localStorage.getItem("user_phone");
+                    this.cart[0]["username"]="";
+                    this.cart[0]["phone"]="";
 
                         
                         this.navCtrl.setRoot("NotificationsPage",this.cart);
                         
                     
                     this.utils.dismissLoading();
-                  }
-                  else {
-                    this.utils.presentAlert("Oops", "Order Failed, Please try once");
+                  // }
+                  // else {
+                  //   this.utils.presentAlert("Oops", "Order Failed, Please try once");
           
-                  }
+                  // }
                 });
               }
           }

@@ -1,5 +1,21 @@
-<ion-header>
+<ion-header style="background: #b8860b;">
   <header [title]="headerTitle"></header>
+  <ion-row>
+    <ion-col>
+      <ion-list inset class="no-border" style="margin-top: 4px;width: 90%;margin-left: 20px;">
+        <ion-item style="padding-left: 0px;">
+          <ion-select id="ions" [(ngModel)]="signup.state" style="width: 100% !important;max-width:none !important ;"
+            placeholder="Select Catagory">
+            <ion-option *ngFor="let state of statelist" [value]="state.ID" (ionSelect)="selectEmployee($event, state)">
+              {{state.Value}}</ion-option>
+          </ion-select>
+
+        </ion-item>
+
+      </ion-list>
+    </ion-col>
+
+  </ion-row>
 </ion-header>
 
 <ion-content padding>
@@ -17,7 +33,7 @@
 
   <br>
   <button ion-button block color="custom" (click)="submitDate()" [disabled]="  !fromdate || !todate">Submit</button>
-  <ion-row style="float: right;" *ngIf="totalval>0">
+  <ion-row style="float: right;">
     <ion-col>
       <p>Total Sales-
         <strong>{{totalval  | currency:'INR'}}</strong>
@@ -31,39 +47,17 @@
          
           <ion-row>
             <ion-col col-6>
-              {{s.OrderNo}}
+              {{s.ProductName}}
             </ion-col>
             <ion-col col-1>
               -
             </ion-col>
             <ion-col col-5>
-              {{s.OrderAmount  | currency:'INR'}}
+              {{s.Amount  | currency:'INR'}}
               
             </ion-col>
           </ion-row>
 
-          <!-- <ion-row>
-            <ion-col col-4>
-              Order Date
-            </ion-col>
-            <ion-col col-1>
-              :
-            </ion-col>
-            <ion-col col-7>
-              {{s.OrderDate}}
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col col-4>
-              Order Amount
-            </ion-col>
-            <ion-col col-1>
-              :
-            </ion-col>
-            <ion-col col-7>
-
-            </ion-col>
-          </ion-row> -->
         </ion-card-content>
       </ion-card>
       

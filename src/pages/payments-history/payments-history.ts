@@ -39,6 +39,7 @@ OrdeDateStr:any;
 ProductAmount:any;
 OrderID:any;
 products:any;
+BillNo:any;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -47,6 +48,8 @@ products:any;
   ) {
     this.headerTitle = "View Orders Page";
    this.OrderID= this.navParams.data.OrderID;
+   this.BillNo= this.navParams.data.Billno;
+
    this.OrdeDateStr= this.navParams.data.OrdeDateStr;
    this.ProductAmount= this.navParams.data.TotalAmount;
 

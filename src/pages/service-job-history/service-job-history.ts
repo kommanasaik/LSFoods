@@ -91,6 +91,8 @@ products:any;
   {
     let data={
       OrderID:OrderID.OrderID  ,
+      Billno:OrderID.BillNo  ,
+
       OrdeDateStr:OrderID.OrdeDateStr,
       TotalAmount:OrderID.TotalAmount
     }

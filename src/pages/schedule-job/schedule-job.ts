@@ -39,6 +39,7 @@ export class ScheduleJobPage {
   /**
 * Value of the minDate
 */
+totalval;
   minDate;
 
   /**
@@ -82,6 +83,7 @@ submitDate() {
     this.utils.presentLoading();
     this.utils.getsalesreport(this.fromdate,this.todate).subscribe((Response) => {
       if(Response.length>0){
+        this.totalval = Response.map(bill => bill.OrderAmount).reduce((acc, bill) => bill + acc);
         this.products=Response;
       }
       else{

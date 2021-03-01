@@ -1,0 +1,49 @@
+<!--
+  Generated template for the SingleentryitemPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header style="background: #b8860b;">
+  <header [title]="headerTitle"></header>
+ 
+</ion-header>
+<ion-content padding>
+  <form 
+  [formGroup]="form" (ngSubmit)="manage(form.value)">
+   <ion-list margin-bottom>
+      <div formArrayName="technologies" margin-bottom>
+        <section [formGroupName]="i" *ngFor="let tech of form.controls.technologies.controls; let i = index">
+           <ion-item-group>
+                <ion-list inset style="margin-top: 4px;width: 100%;border:1px solid #b8860b ;margin-left: 2px;">
+                  <ion-item style="padding-left: 0px;">
+                <ion-select  cancelText="Cancel"             placeholder="Select Catagory" okText="Okay!" (ionChange)="selectEmployee($event, state)" formControlName="Name"  style="width: 100% !important;max-width:none !important ;">
+                  <ion-option *ngFor="let state of products" value="{{state.ID}}" >{{state.Value}}</ion-option>
+                  </ion-select>
+                  </ion-item>
+                </ion-list>
+              <span  color="custom"    float-right ion-button icon-left clear  *ngIf="form.controls.technologies.length > 1" 
+                 (click)="removeInputField(i)">
+                 <ion-icon name="close"></ion-icon>
+                 Remove
+              </span>  
+           </ion-item-group>   
+           <ion-item margin-bottom no-lines>
+            <ion-label floating>Amount</ion-label>
+            <ion-input type="text"maxlength="40"formControlName="Price"></ion-input>
+         </ion-item>
+     
+        </section>
+     </div>
+
+   
+  
+     <span color="custom"  ion-button float-left icon-left clear (click)="addNewInputField()">
+           <ion-icon name="add"></ion-icon>
+           Add a new
+     </span>
+  </ion-list>
+     <button ion-button block  color="custom" text-center [disabled]="!form.valid"  >Submit</button>
+</form>
+
+</ion-content>

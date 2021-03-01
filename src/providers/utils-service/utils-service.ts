@@ -144,8 +144,20 @@ cart:any=[];
     return await this.loading.dismiss();
   }
 
-  public ProductTransactions():Observable<any>{
-    
+  public ProductTransactions(passcart):Observable<any>{
+    if(this.cart.length>0){
+    if(this.cart[0].Name!=undefined){
+      this.cart=this.cart;
+    }
+    else{
+      this.cart=passcart;
+    }
+
+    }
+    else{
+      this.cart=passcart;
+
+    }
     console.log(this.cart);
 
     const httpOptions = {
@@ -154,7 +166,7 @@ cart:any=[];
       })
     };
     return this.http.post(this.cfg.api+'/orderdetails/placingorder', JSON.stringify(this.cart), httpOptions)
-    
+      
   }
   public postuseraccountdetails(data):Observable<any>{
     
@@ -188,6 +200,16 @@ cart:any=[];
     return this.http.get(this.cfg.api+'/orderdetails/getsalesreport?fromDate='+fromdate+'&toDate='+todate, httpOptions)
   }
 
+  getitemsbysalesreport(fromdate,todate): Observable<any> {
+    
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    return this.http.get(this.cfg.api+'/orderdetails/getitemwisesalesreport?fromDate='+fromdate+'&toDate='+todate, httpOptions)
+  }
+
   getmusalesReport(userid): Observable<any> {
     
     const httpOptions = {
@@ -196,6 +218,15 @@ cart:any=[];
       })
     };
     return this.http.get(this.cfg.api+'/orderdetails/getmysalesreport?StaffID='+userid, httpOptions)
+  }
+  updateDayendProcess(userid): Observable<any> {
+    
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    return this.http.get(this.cfg.api+'/orderdetails/markasendshift?StaffID='+userid, httpOptions)
   }
   getproductcatagory(): Observable<any> {
     

@@ -1,4 +1,4 @@
-page-schedule-job {
+page-salesreportbycat {
     ion-calendar .calendar-row .select {
         background: #b8860b;
     }
@@ -8,5 +8,11 @@ page-schedule-job {
   
    ion-grid.grid {
     margin-bottom: -20px;
+}
+.iconst{
+    float: right;
+    margin-right: 12px;
+    color: white;
+    font-size: 20px;
 }
 }

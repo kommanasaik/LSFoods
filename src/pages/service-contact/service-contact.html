@@ -3,16 +3,18 @@
 </ion-header>
 
 <ion-content padding>
- 
-<ion-row style="float: right;">
+  
+<div *ngIf="!hidden">
+  <ion-row style="float: right;" *ngIf="totalval>0">
+
   <ion-col>
     <p>Total Sales-
       <strong>{{totalval  | currency:'INR'}}</strong>
     </p>
   </ion-col>
 </ion-row>
-
-    <ion-grid *ngFor="let s of products">
+<div *ngIf="totalval>0">
+    <ion-grid *ngFor="let s of products"  >
       <ion-card>
         <ion-card-content>
         
@@ -24,7 +26,7 @@
               :
             </ion-col>
             <ion-col col-7>
-              {{s.OrderID}}
+              {{s.OrderNo }}
             </ion-col>
           </ion-row>
 
@@ -55,5 +57,12 @@
       </ion-card>
       
     </ion-grid>
-
+    
+  <ion-row>
+    <ion-col>
+      <button ion-button color="custom" block type="submit" (click)="DayendProcess()">Dayend Process</button>
+    </ion-col>
+  </ion-row>
+  </div>
+</div>
 </ion-content>

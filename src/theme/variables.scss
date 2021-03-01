@@ -87,7 +87,36 @@ $colors: (
 
 @import "roboto";
 @import "noto-sans";
+// @import "montereyflf";
 
+
+@font-face {
+  font-family: 'montereyflf';
+  font-style: normal;
+  font-weight: normal;
+  src: url('src/assets/fonts/montereyflf.ttf');
+}
+
+@font-face {
+  font-family: 'montereyflf';
+  font-style: normal;
+  font-weight: bold;
+  src: url('src/assets/fonts/montereyflf-bold.ttf');
+}
+
+@font-face {
+  font-family: 'montereyflf';
+  font-style: italic;
+  font-weight: normal;
+  src: url('src/assets/fonts/montereyflf-italic.ttf');
+}
+
+@font-face {
+  font-family: 'montereyflf';
+  font-style: italic;
+  font-weight: bold;
+  src: url('src/assets/fonts/montereyflf-bolditalic.ttf');
+}
 //----------------- custom styles -------
 $tabs-md-tab-color-active: #b8860b;
 $tabs-ios-tab-color-active: #b8860b;

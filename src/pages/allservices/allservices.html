@@ -57,6 +57,14 @@
         Description</ion-label>
       <ion-input type="text" formControlName="Description"></ion-input>
     </ion-item>
+    <ion-item>
+      <ion-col>
+      <span ion-text color="custom"  tappable (click)="getPicture()">Chooose image</span>
+    </ion-col>
+    <ion-col>
+      <img [src]="capturedSnapURL" onerror="this.onerror=null;this.src='../assets/images/noimage.jpg'"  height="100px" width="100px" alt=""/>
+    </ion-col>
+  </ion-item>
    <ion-row>
     <ion-col>
       <button ion-button color="custom" block type="submit" [disabled]="!productForm.valid">Submit</button>

@@ -49,8 +49,49 @@
           </ion-list>
         </ion-col>
       </ion-row>
-   
   <div *ngIf="hidden">
+    <ion-row>
+      <ion-col>
+        <span>Mobile No/Email</span>
+          <ion-item style="height: 4rem;padding-left: 0px;border: 3px solid #bdbdbd;border-radius: 5px;">
+            <ion-input  [(ngModel)]="custid" type="text" ></ion-input>
+          </ion-item>
+          
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col style="text-align: center;">
+        <button ion-button class="login-button" (click)="checkno()"  color="custom"  style="width: 120px;border-radius: 5px;font-size: 18px;height: 4rem;color: white !important;" type="submit">Check 
+        </button>
+      </ion-col>
+    </ion-row>
+    
+  </div> 
+  <div *ngIf="hiddendetails">
+    <ion-row>
+      <ion-col col-4>
+        Name
+      </ion-col>
+      <ion-col col-1>
+        :
+      </ion-col>
+      <ion-col col-7>
+        {{creditcustname}}
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-4>
+        Mobile No
+      </ion-col>
+      <ion-col col-1>
+        :
+      </ion-col>
+      <ion-col col-7>
+        {{creditcustmobile}}
+      </ion-col>
+    </ion-row>
+  </div> 
+  <div *ngIf="hiddenForm">
     <form [formGroup]="registerForm" (ngSubmit)="onRegisterSubmit()">
 
       <ion-row>
@@ -111,7 +152,7 @@
     </form>
   </div>
 
-  <div *ngIf="!hidden" id="btnsubmit" [ngStyle]="{'display':cart.length>0 ? 'inline': 'none'}"
+  <div *ngIf="!hiddenForm1" id="btnsubmit" [ngStyle]="{'display':cart.length>0 ? 'inline': 'none'}"
     style="padding: 5px;; width: 100%;">
     <button ion-button block tappable style="background-color: #b8860b;" (click)="proceedtocheckout()">
       CHECK OUT

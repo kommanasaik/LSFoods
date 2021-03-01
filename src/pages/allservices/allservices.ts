@@ -1,8 +1,10 @@
 import { Component,ViewChild,Input } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,ActionSheetController } from 'ionic-angular';
 import { UtilsServiceProvider } from '../../providers/utils-service/utils-service';
 import { BookServiceProvider } from '../../providers/book-service/book-service';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { Camera, CameraOptions } from '@ionic-native/camera';
+import { File, Entry, FileEntry } from '@ionic-native/file';
 
 /**
  * Generated class for the AllservicesPage page.
@@ -22,6 +24,7 @@ export class AllservicesPage {
   signup={
     state:0
   }
+ 
   statelist:any;
 
   ProdcutName: any;
@@ -36,8 +39,21 @@ export class AllservicesPage {
   UserData:any;
   updtype:any;
   headerTitle:string;
+  capturedSnapURL:any;
+  capturedUrl: any;
+
+  imageUrl;
+ mimeType: any = " ";
+
+ imageName: any = " ";
+ previewUrl: any;
+
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public bookService: BookServiceProvider, private fb: FormBuilder,
+    public actionSheetController: ActionSheetController,
+    private file: File,
+
+    private camera: Camera,
     public utils: UtilsServiceProvider
     
     ) {
@@ -63,6 +79,100 @@ export class AllservicesPage {
    
 
   }
+  
+  async getPicture() {
+    const actionSheet = await this.actionSheetController.create({
+      title: 'Select',
+      buttons: [{
+        text: 'Camera',
+        icon: 'camera',
+        handler: () => {
+          // console.log('Camera clicked');
+          const options: CameraOptions = {
+            quality: 50,
+            destinationType: this.camera.DestinationType.FILE_URI,
+            encodingType: this.camera.EncodingType.JPEG,
+            mediaType: this.camera.MediaType.PICTURE
+          }
+
+          this.camera.getPicture(options).then((imageData) => {
+            this.capturedUrl = imageData;
+            // console.log(this.capturedUrl)
+            this.convertAsBase64();
+          }, (err) => {
+            // Handle error
+          });
+        }
+      }, {
+        text: 'Gallery',
+        icon: 'image',
+        handler: () => {
+          // console.log('Gallery clicked');
+          const options: CameraOptions = {
+            quality: 50,
+            destinationType: this.camera.DestinationType.FILE_URI,
+            encodingType: this.camera.EncodingType.JPEG,
+            mediaType: this.camera.MediaType.PICTURE,
+            sourceType: this.camera.PictureSourceType.PHOTOLIBRARY
+          }
+
+          this.camera.getPicture(options).then((imageData) => {
+            this.capturedUrl = imageData;
+            // console.log(this.capturedUrl)
+            this.convertAsBase64();
+          }, (err) => {
+            // Handle error
+          });
+        }
+      }, {
+        text: 'Cancel',
+        icon: 'close',
+        role: 'cancel',
+        handler: () => {
+          // console.log('Cancel clicked');
+        }
+      }]
+    });
+    await actionSheet.present();
+  }
+  openGallery() {
+  
+  }
+  convertAsBase64() {
+    this.file.resolveLocalFilesystemUrl(this.capturedUrl).then((entry: Entry) => {
+      if (entry) {
+        var fileEntry = entry as FileEntry;
+        fileEntry.file(success => {
+
+          this.mimeType = success.type;
+          this.imageName = success.name;
+
+        }, error => {
+          // no mime type found;
+        });
+      }
+    });
+
+    this.file.resolveLocalFilesystemUrl(this.capturedUrl).then((entry: any) => {
+      entry.file((file) => {
+        var reader = new FileReader();
+        reader.onloadend = (encodedFile: any) => {
+          let src = encodedFile.target.result;
+          this.previewUrl = src;
+          // this.hideAttachmentButtons = true;
+          let base64Image = this.previewUrl;
+          this.capturedSnapURL = base64Image;
+        }
+        reader.readAsDataURL(file);
+      })
+      setTimeout(() => { this.clickToShowImage(); }, 1000);
+    }).catch((error) => {
+      // console.log(error);
+    })
+  }
+  clickToShowImage() {
+  }
+
   RegisterValidation() {
     this.productForm = this.fb.group({
       City: ['', Validators.required],
@@ -86,7 +196,6 @@ export class AllservicesPage {
       Weights:'',
       Code:'',
       catid:''
-
     }
     let ProductData = {
       ProductName: this.productForm.value.ProductName,
@@ -95,7 +204,8 @@ export class AllservicesPage {
      Quantity:this.productForm.value.City,
      Units:this.productForm.value.Weights,
      ProductCode:this.productForm.value.Code,
-     Type:this.productForm.value.catid
+     Type:this.productForm.value.catid,
+      ImageByteArray1:this.capturedSnapURL
 
 
     }
