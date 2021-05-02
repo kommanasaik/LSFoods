@@ -59,10 +59,10 @@ export class FooterComponent {
 
   /**
 *  Fired when leaves the page
-*/
-  ionViewDidLeave() {
+*/ionViewDidLeave() {
     this.msgLoader.unsubscribe();
   }
+  
 
   /**
 *  setting pages data

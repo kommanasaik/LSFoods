@@ -453,7 +453,7 @@ export class BookallservicesPage {
   addText() {
     let alert = this.alertCtrl.create({
       title: 'Description',
-
+      mode: 'ios',
       inputs: [
         {
           type: 'textarea',

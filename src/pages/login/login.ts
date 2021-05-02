@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,Events } from 'ionic-angular';
+
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { Storage } from '@ionic/storage';
 import { FormGroup, Validators,FormControl, FormBuilder } from '@angular/forms';
@@ -8,7 +9,7 @@ import { FCM } from '@ionic-native/fcm';
 import { UniqueDeviceID } from '@ionic-native/unique-device-id';
 import { AnonymousSubject } from 'rxjs';
 import { ServicecallsProvider } from '../../providers/servicecalls/servicecalls';
-
+import {Router} from '@angular/router';
 @IonicPage()
 @Component({
   selector: 'page-login',
@@ -65,7 +66,8 @@ loginForm:any;
     public utils: UtilsServiceProvider,
     private fcm: FCM,
     private uniqueDeviceID: UniqueDeviceID,
-    private ss:ServicecallsProvider
+    private ss:ServicecallsProvider,  public events: Events,
+    // private router:Router
   ) {
     this.LoginDetailsObj = {
       Username: '',
@@ -102,7 +104,11 @@ loginForm:any;
             localStorage.setItem("UserType", result.UserType)
           
             this.navCtrl.setRoot("BookServicePage");
-          
+
+            //  this.navCtrl.setRoot("MyApp");
+
+  //this.navCtrl.navigate['BookServicePage'];
+  this.events.publish('my-message', result.UserType);
   
         }
         else if(result.error) {

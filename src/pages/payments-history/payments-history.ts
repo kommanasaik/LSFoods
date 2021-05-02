@@ -3,7 +3,7 @@
 // import { UtilsServiceProvider } from '../../providers/utils-service/utils-service';
 
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,AlertController } from 'ionic-angular';
 import { PaymentServiceProvider } from '../../providers/payment-service/payment-service';
 import { Storage } from '@ionic/storage';
 import { UtilsServiceProvider } from '../../providers/utils-service/utils-service';
@@ -40,12 +40,20 @@ ProductAmount:any;
 OrderID:any;
 products:any;
 BillNo:any;
+MobileNo:any;
+Address:any;
+CustomerName:any;
+usertype:any;
   constructor(
+    public alertCtrl: AlertController,
+
     public navCtrl: NavController,
     public navParams: NavParams,
     public storage: Storage,
     public utils: UtilsServiceProvider
   ) {
+this.usertype=localStorage.getItem("UserType");
+
     this.headerTitle = "View Orders Page";
    this.OrderID= this.navParams.data.OrderID;
    this.BillNo= this.navParams.data.Billno;
@@ -53,9 +61,51 @@ BillNo:any;
    this.OrdeDateStr= this.navParams.data.OrdeDateStr;
    this.ProductAmount= this.navParams.data.TotalAmount;
 
+   this.MobileNo= this.navParams.data.MobileNo;
+
+   this.CustomerName= this.navParams.data.CustomerName;
+   this.Address= this.navParams.data.Address;
+
+
 
   }
-
+  proceedtocheckout(){
+    this.myHandlerFunction(this.OrderID) 
+  }
+  myHandlerFunction(orderid) {
+   let userddi = localStorage.getItem('user_id');
+    let alert = this.alertCtrl.create({
+      title: 'Confirm',
+      cssClass: 'alertCancel',
+      mode: 'ios',
+      message: 'Do you want to deliver this order:' +this.BillNo+' ?',
+      buttons: [
+       
+        {
+          text: 'Yes',
+          cssClass: 'alertButton',
+          handler: () => {
+           this.deleteOrderBill(orderid,userddi)
+          }
+        },
+        {
+          text: 'No',
+          cssClass: 'alertButton',
+          role: 'cancel',
+          handler: () => {
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+deleteOrderBill(orderid,userddi){
+  this.utils.deliverorder(orderid,userddi).subscribe((Response) => {
+    if (Response.ErrorCode > 0) {
+      this.navCtrl.setRoot("ServiceJobHistoryPage");
+    }
+  });
+}
   /**
 *  Fired after loading constructor
 *  calling getPaymentHistory method

@@ -1,12 +1,12 @@
+
 <ion-header>
   <header [title]="headerTitle"></header>
   <!-- <ion-searchbar style="margin-top: 4px;width: 90%;border-radius: 5px;margin-left: 20px;background: none !important;" (ionCancel)="onCancel($event)"  placeholder="Search for Services" (ionInput)="getItemslist($event)"></ion-searchbar> -->
 </ion-header>
   
-<ion-content padding style="
-         background: #f4f4f4;
-">
+<ion-content padding style="background: url(../assets/images/listback.jpeg) no-repeat;">
 
+<img *ngIf="responsecount==0" style="display: block;margin-left: auto;margin-right: auto;" [src]="'assets/images/norecords.png'" alt=""/>
 
   <div>
     <ion-grid *ngFor="let s of products" (click)="navigateViewpage(s)">
@@ -42,7 +42,7 @@
               :
             </ion-col>
             <ion-col col-7>
-              {{s.OrdeDateStr }}
+              {{s.OrdeDate | date:'short' }}
             </ion-col>
           </ion-row>
           <ion-row>
@@ -54,6 +54,18 @@
             </ion-col>
             <ion-col col-7>
               {{s.TotalAmount | currency:'INR'}}
+            </ion-col>
+          </ion-row>
+
+          <ion-row *ngIf="this.usertype=='C'">
+            <ion-col col-4 >
+              Status
+            </ion-col>
+            <ion-col col-1>
+              :
+            </ion-col>
+            <ion-col col-7 class="textcolourcss"  [ngStyle]="{'color':s.OrderStatus=='Delivered' ? 'green': 'blue'}">
+              {{s.OrderStatus}}
             </ion-col>
           </ion-row>
         </ion-card-content>

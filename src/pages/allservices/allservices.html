@@ -16,7 +16,7 @@
       <ion-label floating>
         <ion-icon name="logo-buffer" item-start class="text-primary"></ion-icon>
         Catagory</ion-label>
-      <ion-select  formControlName="catid"  >
+      <ion-select  formControlName="catid"  interface="action-sheet" >
         <ion-option *ngFor="let state of statelist" value="{{state.ID}}">{{state.Value}} </ion-option>
     </ion-select> 
     </ion-item>
@@ -32,13 +32,24 @@
         Code</ion-label>
       <ion-input type="text" formControlName="Code" ></ion-input>
     </ion-item>
+    <!-- <ion-select  formControlName="quanttypeid"  interface="action-sheet" >
+      <ion-option *ngFor="let quant of quantitylist" value="{{quant.ID}}">{{quant.Value}} </ion-option>
+  </ion-select>  -->
+  <ion-item>
+    <ion-label floating>
+      <ion-icon name="ios-film" item-start class="text-primary"></ion-icon>
+      Quantity Type</ion-label>
+      <ion-select  formControlName="quanttypeid"  interface="action-sheet" >
+        <ion-option *ngFor="let quant of quantitylist" value="{{quant.ID}}" (ionSelect)="selectEmployee($event, quant.ID)">{{quant.Value}}  </ion-option>
+    </ion-select> 
+  </ion-item>
     <ion-item>
       <ion-label floating>
         <ion-icon name="ios-film" item-start class="text-primary"></ion-icon>
         Quantity</ion-label>
       <ion-input type="number" formControlName="City" ></ion-input>
     </ion-item>
-    <ion-item>
+    <ion-item  >
       <ion-label floating>
         <ion-icon name="ios-grid" item-start class="text-primary"></ion-icon>
         Weight</ion-label>
@@ -51,12 +62,12 @@
         Price</ion-label>
       <ion-input type="number" formControlName="Price"></ion-input>
     </ion-item>
-    <ion-item>
+    <!-- <ion-item>
       <ion-label floating>
         <ion-icon name="ios-copy" item-start class="text-primary"></ion-icon>
         Description</ion-label>
       <ion-input type="text" formControlName="Description"></ion-input>
-    </ion-item>
+    </ion-item> -->
     <ion-item>
       <ion-col>
       <span ion-text color="custom"  tappable (click)="getPicture()">Chooose image</span>

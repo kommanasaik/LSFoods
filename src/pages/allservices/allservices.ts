@@ -26,6 +26,7 @@ export class AllservicesPage {
   }
  
   statelist:any;
+  quantitylist:any;
 
   ProdcutName: any;
   Description: any;
@@ -47,6 +48,8 @@ export class AllservicesPage {
 
  imageName: any = " ";
  previewUrl: any;
+ hiddenquan:any=true;
+ hiddenweight:any=true;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public bookService: BookServiceProvider, private fb: FormBuilder,
@@ -57,10 +60,72 @@ export class AllservicesPage {
     public utils: UtilsServiceProvider
     
     ) {
-    this.headerTitle = "Create Items";
+      if(navParams.data.prodid!=undefined)
+      {
+      this.headerTitle = "Update Catagory";
+
+        this.prodid=navParams.data.prodid;
+        this.updtype='U';
+        this.headerTitle='Update';
+        this.bindData();
+      }
+      else{
+      this.headerTitle = "Create Catagory";
+
+        this.prodid=0;
+        this.updtype="A";
+        this.headerTitle='Create';
+    
+      }
 
     this.initializeItems();
+    this.quantitylist=[{
+      ID:"1",Value:"Kgs"
+    },
+    {
+      ID:"2",Value:"Count"
+    }]
+    console.log(this.quantitylist)
+  }
+  bindData(){
 
+    this.utils.presentLoading();
+    this.utils.getproductByid(this.prodid).subscribe((Response) => {
+      if(Response.length<=0){
+        this.utils.dismissLoading();
+      }
+      else{
+        this.utils.dismissLoading();
+
+        this.productForm.reset({
+          ProductName: Response.Name,
+          // Description: Response.DeiscountPer,
+          Price: Response.Price,
+         Quantity:Response.Quantity,
+         Units:Response.Units,
+         Code:Response.Code,
+         Type:Response.Type,
+         quanttypeid:Response.Weight,
+          catid:Response.ParentID,
+          ImageByteArray1:Response.ImageByteArray1,
+          City:Response.Quantity,
+          Weights:Response.Units,
+          
+
+        })
+      }
+      this.capturedSnapURL=Response.ImageByteArray1;
+    });
+  }
+  selectEmployee(emp){
+    if(emp==1){
+      this.hiddenweight=false;
+      this.hiddenquan=true;
+    }
+    else{
+      this.hiddenweight=true;
+      this.hiddenquan=false;
+    }
   }
 
   ionViewDidLoad() {
@@ -175,13 +240,15 @@ export class AllservicesPage {
 
   RegisterValidation() {
     this.productForm = this.fb.group({
-      City: ['', Validators.required],
+      City: [''],
       ProductName: ['', Validators.required],
-      Weights: ['', Validators.required],
-      Description: ['', Validators.required],
+      Weights: [''],
+      // Description: ['', Validators.required],
       Price: ['', Validators.required],
       Code: ['', Validators.required],
-      catid: ['', Validators.required]
+      catid: ['', Validators.required],
+      quanttypeid: ['', Validators.required]
+
 
 
     });
@@ -190,42 +257,93 @@ export class AllservicesPage {
     this.registerObj = {
       City:'',
       ProductName: '',
-      Description: '',
+      // Description: '',
       Price: '',
       ImageData: '',
       Weights:'',
       Code:'',
-      catid:''
+      catid:'',
+      quanttypeid:''
     }
-    let ProductData = {
+    let ProductData;
+    if(this.updtype=="A"){
+      ProductData = {
       ProductName: this.productForm.value.ProductName,
-      Description: this.productForm.value.Description,
+      // Description: this.productForm.value.Description,
       Price: this.productForm.value.Price,
      Quantity:this.productForm.value.City,
      Units:this.productForm.value.Weights,
      ProductCode:this.productForm.value.Code,
      Type:this.productForm.value.catid,
+     Weight:this.productForm.value.quanttypeid,
+
       ImageByteArray1:this.capturedSnapURL
 
 
     }
+  }
+  else{
+    ProductData = {
+      Name: this.productForm.value.ProductName,
+      // Description: this.productForm.value.Description,
+      Price: this.productForm.value.Price,
+     Quantity:this.productForm.value.City,
+     Units:this.productForm.value.Weights,
+     Code:this.productForm.value.Code,
+     ParentID:this.productForm.value.catid,
+     Weight:this.productForm.value.quanttypeid,
+
+      ImageByteArray1:this.capturedSnapURL,
+      ID:this.prodid
+
+  }
+}
     
     if (ProductData.ProductName != "") {
       console.log(this.ProdcutName);
+      this.utils.presentLoading();
+
+      if(this.updtype=="A"){
+
       this.bookService.AddProducts(ProductData).subscribe((Response) => {
         console.log(Response);
         if (Response.ErrorCode > 0) {
+       this.utils.dismissLoading();
+
           this.navCtrl.setRoot("ReviewsPage");
           
         }
         else {
+       this.utils.dismissLoading();
+
           this.utils.presentAlert("Oops", "Please enter details");
 
 
         }
       });
     }
+    else{
+      this.bookService.updateproduct(ProductData).subscribe((Response) => {
+        console.log(Response);
+        if (Response.ErrorCode > 0) {
+       this.utils.dismissLoading();
+
+          this.navCtrl.setRoot("ReviewsPage");
+          
+        }
+        else {
+       this.utils.dismissLoading();
+
+          this.utils.presentAlert("Oops", "Please enter details");
+
+
+        }
+      });
+    }
+    }
     else {
+
+      
       this.utils.presentAlert("Oops", "Please enter details");
 
     }

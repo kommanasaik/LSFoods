@@ -4,7 +4,7 @@
     <ion-col>
       <ion-list inset class="no-border" style="margin-top: 4px;width: 90%;margin-left: 20px;">
         <ion-item style="padding-left: 0px;">
-          <ion-select id="ions" [(ngModel)]="signup.state" style="width: 100% !important;max-width:none !important ;"
+          <ion-select interface="action-sheet"  id="ions" [(ngModel)]="signup.state" style="width: 100% !important;max-width:none !important ;"
             placeholder="Select Catagory">
             <ion-option *ngFor="let state of statelist" [value]="state.ID" (ionSelect)="selectEmployee($event, state)">
               {{state.Value}}</ion-option>
@@ -17,8 +17,8 @@
 
   </ion-row>
 </ion-header>
+<ion-content style="background: url(../assets/images/listback.jpeg) no-repeat;">
 
-<ion-content padding>
   <ion-item>
     <ion-label>From Date</ion-label>
     <ion-datetime displayFormat="YYYY-MM-DD" [(ngModel)]="fromdate" placeholder="Select Date">
@@ -33,7 +33,14 @@
 
   <br>
   <button ion-button block color="custom" (click)="submitDate()" [disabled]="  !fromdate || !todate">Submit</button>
-  <ion-row style="float: right;">
+  <ion-row style="float: left;">
+    <ion-col *ngIf="!hidden">
+      <p>Total Weight/Quantity-
+        <strong>{{TotalWeight | number}}</strong>
+      </p>
+    </ion-col>
+  </ion-row>
+  <ion-row style="float: right;"  *ngIf="totalval>0">
     <ion-col>
       <p>Total Sales-
         <strong>{{totalval  | currency:'INR'}}</strong>
@@ -41,6 +48,8 @@
     </ion-col>
   </ion-row>
   <div>
+<img *ngIf="responsecount==0" style="display: block;margin-left: auto;margin-right: auto;" [src]="'assets/images/norecords.png'" alt=""/>
+
     <ion-grid *ngFor="let s of products">
       <ion-card>
         <ion-card-content>
@@ -53,7 +62,7 @@
               -
             </ion-col>
             <ion-col col-5>
-              {{s.Amount  | currency:'INR'}}
+              {{s.Amount  | currency:'INR'}}({{s.Weight | number}})
               
             </ion-col>
           </ion-row>

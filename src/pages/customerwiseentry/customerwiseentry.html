@@ -1,0 +1,28 @@
+<ion-header>
+  <header [title]="headerTitle"></header>
+</ion-header>
+
+<ion-content padding>
+  <ion-card>
+    <ion-card-content style="padding: 40px;">
+  <ion-row>
+    <ion-col>
+      <span>Email/Mobileno</span>
+      <ion-list inset class="no-border" style="margin: 0px;">
+        <ion-item style="height: 4rem; padding-left: 0px;border: 3px solid #d9d1d1;border-radius: 5px;">
+          <ion-input type="text"  [(ngModel)]="mailmob"></ion-input>
+        </ion-item>
+
+      </ion-list>
+    </ion-col>
+  </ion-row> 
+  <div col-12 style="height: 3.6rem;padding: 5px;" (click)="submitbtn()">
+    <button ion-button block color="custom"  tappable>
+      Submit
+    </button>
+  </div>
+    </ion-card-content>
+</ion-card>
+  
+</ion-content>
+<!-- <input ion-input type="text" [(ngModel)]="customLocation" #search_address > -->

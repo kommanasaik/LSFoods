@@ -1,4 +1,4 @@
-<ion-menu [content]="content" type="overlay">
+<ion-menu [content]="content" type="overlay" >
     <!-- <ion-header>
       <ion-toolbar color="custom">
         <ion-title>Quick Worker</ion-title>
@@ -8,10 +8,31 @@
     <ion-content>
         <img style="padding: 16px;" [src]="AppLogo"/>
       <ion-list>
-        <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
-            <ion-icon [name]="p.icon" float-left color="custom"></ion-icon>&nbsp;
-          {{p.title}}
-        </button>
+        <div [ngClass]="p.sublist!='R' && p.sublist!='L' ? '' : 'bgclass'"  *ngFor="let p of pages"  ion-item  (click)="openPage(p)">
+          
+            <ion-icon [name]="p.icon"  float-left color="custom"></ion-icon>&nbsp;
+            
+            <ion-icon name="md-arrow-dropdown"  *ngIf="p.sublist=='R' || p.sublist=='L'" float-right style="font-size: 2.5rem;
+            color: black;"></ion-icon>&nbsp;
+
+         <span  *ngIf="p.sublist!='R' && p.sublist!='L'"> {{p.title}}</span>
+         <span  *ngIf="p.sublist=='R'" > {{p.title}}</span>
+         <span   *ngIf="p.sublist=='L'"> {{p.title}}</span>
+          <!-- <ion-list *ngFor="let r of rsublist  let i=index" > -->
+            <ion-item-group  *ngFor="let r of rsublist" submenu [class.visible]="rshowSubmenu">
+            <button  *ngIf="p.sublist=='R'"    ion-item  (click)="openPage(r)">
+                <ion-icon [name]="r.icon" float-left color="custom"></ion-icon>&nbsp;
+              {{r.title}}
+            </button>
+            </ion-item-group>   
+          <!-- <ion-list *ngFor="let l of lsublist"> -->
+            <ion-item-group *ngFor="let l of lsublist" submenu [class.visible]="lshowSubmenu">
+            <button  *ngIf="p.sublist=='L'"    ion-item  (click)="openPage(l)">
+                <ion-icon [name]="l.icon" float-left color="custom"></ion-icon>&nbsp;
+              {{l.title}}
+            </button>
+            </ion-item-group>
+          </div>
       </ion-list>
     </ion-content>
   

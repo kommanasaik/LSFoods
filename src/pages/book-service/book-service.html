@@ -4,9 +4,11 @@
     <ion-col>
       <ion-list inset class="no-border" style="margin-top: 4px;width: 90%;margin-left: 20px;">
         <ion-item style="padding-left: 0px;">
-          <ion-select id="ions" [(ngModel)]="signup.state" style="width: 100% !important;max-width:none !important ;"
-            placeholder="Select Catagory">
-            <ion-option *ngFor="let state of statelist" [value]="state.ID" (ionSelect)="selectEmployee($event, state)">
+          <!-- (ionChange)="ProductonChange($event)" -->
+          <!-- (ionSelect)="selectEmployee($event, state)" -->
+          <ion-select id="ions" interface="action-sheet"  (ionChange)="ProductonChange($event)" [(ngModel)]="signup.state"
+            style="width: 100% !important;max-width:none !important;" placeholder="Select Catagory">
+            <ion-option *ngFor="let state of statelist"  [value]="state.ID">
               {{state.Value}}</ion-option>
           </ion-select>
 
@@ -16,76 +18,115 @@
     </ion-col>
 
   </ion-row>
-  <ion-searchbar style="width: 92%;border-radius: 5px;margin-left: 16px;background: none !important;"
+  <ion-searchbar  style="width: 92%;border-radius: 5px;margin-left: 16px;background: none !important;"
     (ionCancel)="onCancel($event)" placeholder="Search Items" (ionInput)="getItemslist($event)"></ion-searchbar>
 
 </ion-header>
-<ion-content>
-  <div class="labeltxrt" *ngIf="hidden">
-    <ion-row>
+
+<ion-content style="background: url(../assets/images/listback.jpeg) no-repeat;">
+<img *ngIf="responsecount==0" style="display: block;margin-left: auto;margin-right: auto;" [src]="'assets/images/norecords.png'" alt=""/>
+  
+  <div  *ngIf="custhidden">
+    <ion-row style="background: #e0e0e0;height: 50px;">
       <ion-col>
-        <ion-label class="montereyflf">Select Catagory for viewing list.</ion-label>
+        <!-- <ion-label style="text-align: center;"> -->
+        <span style="float: left;
+          font-size: 20px;padding: 5px;">{{creditcustomerName}}</span><span style="float: right;
+    font-size: 20px;padding: 5px;">{{creditmobileno}}</span>
+    <!-- </ion-label> -->
       </ion-col>
     </ion-row>
   </div>
-  <div *ngFor="let r of cart">
-    <ion-card>
-      <ion-card-content style="padding: 0px 0px;">
-        <ion-row style="width: 70%;float: left;">
-          <ion-col col-12>
-            <ion-label
-              style="font-size: 25px;margin-top: -7px;color: black;font-weight: 400;float: left;font-family: -webkit-pictograph;">
-              {{r.Name}}</ion-label>
-          </ion-col>
-          <ion-col col-12>
-            <ion-label
-              style="font-size: 25px;margin-top: -24px;color: #424242;font-weight: 400;float: left;font-family: none;">
-              {{r.UnitsString}}</ion-label>
-          </ion-col>
-          <ion-col col-12>
-            <ion-label
-              style="font-size: 20px;margin-top: -24px;color: #6f6969 ;font-weight: 400;float: left;font-family: none;">
-              {{r.Price | currency:'INR'}}</ion-label>
-          </ion-col>
-         
-        </ion-row>
-        <ion-row style="width: 30%;float: right;">
-          <ion-col col-12>
-            <img [src]="r.ImageByteArray1" onerror="this.onerror=null;this.src='../assets/images/noimage.jpg'"  style="width: 70px !important;height: 70px !important;" alt="" />
-          </ion-col>
-        </ion-row>
-       
-        <ion-row class="ion-align-items-center" style="    width: 30%;float: right;margin-right: -13px;">
-          <div style="border: 2px solid #b8860b;border-radius: 10px;">
-            <ion-col size="1" class="ion-align-self-center" style="    -webkit-flex-grow: 0;color: #b8860b;">
-              <ion-icon name="remove-circle" slot="icon-only" (click)="removecart(r)"></ion-icon>
-            </ion-col>
 
-            <ion-col size="1" class="ion-align-self-center"
-              style="flex-grow: initial;color: green;font-size: 16px;margin-top: -3px;font-weight: 500;">
-              {{r.count}}
-            </ion-col>
-
-
-
-            <ion-col size="1" class="ion-align-self-center" style="-webkit-flex-grow: 0;color: #b8860b;">
-              <ion-icon name="add-circle" slot="icon-only" (click)="addToCart(r)"></ion-icon>
-            </ion-col>
-          </div>
-          <!-- <ion-col size="2" class="ion-align-self-center" *ngIf="r.count>0" style="margin-top: -3px;">
-            <ion-icon name="md-trash" (click)="gotodelete(r)" role="img" class="icon icon-md ion-ios-trash"
-              aria-label="add" style="font-size: 20px;color: red;float: right"></ion-icon>
-
-          </ion-col> -->
-
-        </ion-row>
-      </ion-card-content>
-    </ion-card>
+  <div class="labeltxrt" *ngIf="hidden">
+    <ion-row>
+      <ion-col>
+        <ion-label class="montereyflf">Select Catagory for Products.</ion-label>
+      </ion-col>
+    </ion-row>
   </div>
-  <div id="btnsubmit" [ngStyle]="{'display':cart.length>0 ? 'inline': 'none'}"
-    style="height: 3.6rem;padding: 5px; width: 100%;float: left;">
-    <button ion-button block tappable style="background-color: #b8860b;" (click)="proceedtocheckout()">
-      PROCEED
-    </button>
-  </div>
+
+  <form [formGroup]="form" (ngSubmit)="proceedtocheckout(form.value)">
+    <div formArrayName="itemslist">
+      <!-- <div *ngFor="let r of cart; let item = index"> -->
+        <div class="input-icons"> 
+        <div [formGroupName]="i"  *ngFor="let tech of form.controls.itemslist.controls; let i = index">
+
+          <ion-card>
+            <ion-card-content style="padding: 0px 0px;">
+              <ion-row style="width: 100%;float: left;">
+                <ion-col col-12>
+                  <ion-label 
+                    style="font-size: 20px;margin-top: -7px;color: black;font-weight: 400;float: left;font-family: -webkit-pictograph;">
+                    {{form.controls.itemslist.controls[i].get('Name').value.length > 20 ? form.controls.itemslist.controls[i].get('Name').value.substring(0,20)+"..." : form.controls.itemslist.controls[i].get('Name').value}}({{form.controls.itemslist.controls[i].get('Price').value | currency:'INR'}})
+                    </ion-label>
+                </ion-col>
+             
+               
+              </ion-row>
+              <div style="width: 100%;">
+              <ion-row style="width: 70%;float: left;">
+                <ion-col col-12>
+                  <ion-item style="height: 4rem; padding-left: 0px;border:1px solid #d9d1d1;border-radius: 2px;">
+                    <ion-input type="text" maxlength="40" formControlName="WeightCount"
+                      (change)='onWeightChange($event.target.value,form.controls.itemslist.controls[i],i)' placeholder="Weight"></ion-input>
+                  </ion-item>
+                </ion-col>
+                <ion-col col-12>
+                  <ion-item *ngIf="form.controls.itemslist.controls[i].get('Type').value==1 && form.controls.itemslist.controls[i].get('hidden').value==false" style="height: 4rem; padding-left: 0px;border: 1px solid #d9d1d1;border-radius: 2px;">
+                    <ion-input type="text" maxlength="40" formControlName="Amount" (change)='onRateChange($event.target.value,form.controls.itemslist.controls[i],i)'
+                      placeholder="Amount"></ion-input>
+                  </ion-item>
+                  <ion-item *ngIf="form.controls.itemslist.controls[i].get('Type').value==1 && form.controls.itemslist.controls[i].get('hidden').value==true" style="height: 4rem; padding-left: 0px;border: 1px solid #d9d1d1;border-radius: 2px;">
+                    <ion-input readonly type="text" maxlength="40" formControlName="Amount" (change)='onRateChange($event.target.value,form.controls.itemslist.controls[i],i)'
+                      placeholder="Amount"></ion-input>
+                  </ion-item>
+                  
+                  <ion-item *ngIf="form.controls.itemslist.controls[i].get('Type').value==2" style="height: 4rem; padding-left: 0px;border: 1px solid #d9d1d1;border-radius: 2px;">
+                    <ion-input readonly type="text" maxlength="40" formControlName="Amount" (change)='onRateChange($event.target.value,form.controls.itemslist.controls[i],i)'
+                      placeholder="Amount"></ion-input>
+                  </ion-item>
+                </ion-col>
+                <ion-col col-12 *ngIf="this.customerflag!='CC' && this.usertype!='C'">
+                  <ion-item style="height: 4rem; padding-left: 0px;border:1px solid #d9d1d1;border-radius: 2px;">
+                    <ion-input (change)='onDiscountChange($event.target.value,form.controls.itemslist.controls[i],i)' type="text" maxlength="40" formControlName="ItemDiscountAmount" placeholder="Discount"></ion-input>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+              <ion-row style="width: 30%;" >
+                <ion-col col-12 *ngIf="this.customerflag=='CC' || this.usertype=='C'">
+                  <img [src]="form.controls.itemslist.controls[i].get('ImageByteArray1').value" style="height: 100px;width: 100px;border-radius: 2px;" onerror="this.onerror=null;this.src='../assets/images/noimage.jpg'"
+                    alt="" />
+                </ion-col>
+                <ion-col col-12 *ngIf="this.customerflag!='CC'  && this.usertype!='C'">
+                  <img [src]="form.controls.itemslist.controls[i].get('ImageByteArray1').value" style="height: 150px;width: 100px;border-radius: 2px;" onerror="this.onerror=null;this.src='../assets/images/noimage.jpg'"
+                    alt="" />
+                </ion-col>
+              </ion-row>
+              </div>
+<!-- 
+              <ion-row class="ion-align-items-center" style="    width: 30%;float: right;margin-right: -13px;">
+
+                <ion-col size="1" class="ion-align-self-center" style="    -webkit-flex-grow: 0;color: green;
+          padding: 10px;font-size: 2.3rem;">
+                  <ion-icon name="ios-checkmark-circle" slot="icon-only" (click)="addNewInputField(form.value,r,item)">
+                  </ion-icon>
+                </ion-col>
+
+              </ion-row> -->
+            </ion-card-content>
+          </ion-card>
+        </div>
+        </div>
+      <!-- </div> -->
+
+      <div id="btnsubmit" *ngIf="form.controls.itemslist.length > 0" [ngStyle]="{'display':getProductResponse.length>0 ? 'inline': 'none'}"
+        style="height: 3.6rem;padding: 5px; width: 100%;float: left;">
+        <button ion-button block tappable style="background-color: #b8860b;">
+          PROCEED
+        </button>
+      </div>
+    </div>
+  </form>
+
 </ion-content>

@@ -52,6 +52,26 @@ getProducts(): Observable<any> {
     return this.http.get(this.cfg.api+'/orderdetails/getproductsdetails', httpOptions)
   }
 
+  getProductsbycatid(catid): Observable<any> {
+    
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    return this.http.post(this.cfg.api+'/orderdetails/getproductsbycatid?IDs='+catid, httpOptions)
+  }
+  getsalesreportview(ordrid): Observable<any> {
+    
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    return this.http.get(this.cfg.api+'/orderdetails/salesreportview?OrderID='+ordrid, httpOptions)
+    // return this.http.post(this.cfg.api+'/orderdetails/salesreportview?OrderID=='+ordrid, httpOptions)
+  }
+
   getCatagories(): Observable<any> {
     
     const httpOptions = {
@@ -60,6 +80,16 @@ getProducts(): Observable<any> {
       })
     };
     return this.http.get(this.cfg.api+'/orderdetails/getproductcatagory', httpOptions)
+  }
+
+  getLocations(): Observable<any> {
+    
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    return this.http.get(this.cfg.api+'/orderdetails/getlocationnames', httpOptions)
   }
 
 
@@ -84,6 +114,15 @@ getProducts(): Observable<any> {
     return this.http.post(this.cfg.api+'/orderdetails/productcreation', JSON.stringify(ProductData), httpOptions)
     
   }
+  public updateproduct(ProductData):Observable<any>{
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    return this.http.post(this.cfg.api+'/orderdetails/updateproduct', JSON.stringify(ProductData), httpOptions)
+    
+  }
 
   public AddCatagory(ProductData):Observable<any>{
     const httpOptions = {
@@ -96,6 +135,17 @@ getProducts(): Observable<any> {
   }
 
   
+  public SaveDailyStock(ProductData):Observable<any>{
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    return this.http.post(this.cfg.api+'/orderdetails/savedailyStocktaken', JSON.stringify(ProductData), httpOptions)
+    
+  }
+
+  
   public UpdateCatagory(ProductData):Observable<any>{
     const httpOptions = {
       headers: new HttpHeaders({
@@ -103,6 +153,27 @@ getProducts(): Observable<any> {
       })
     };
     return this.http.post(this.cfg.api+'/orderdetails/updatecatagoryandprice', JSON.stringify(ProductData), httpOptions)
+    
+  }
+
+  public createcreditcustomer(ProductData):Observable<any>{
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    return this.http.post(this.cfg.api+'/orderdetails/createcreditcustomer', JSON.stringify(ProductData), httpOptions)
+    
+  }
+
+  
+  public userprofileupdate(ProductData):Observable<any>{
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    return this.http.post(this.cfg.api+'/user/userprofileupdate', JSON.stringify(ProductData), httpOptions)
     
   }
 }

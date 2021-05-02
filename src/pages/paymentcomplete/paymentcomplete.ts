@@ -31,7 +31,7 @@ export class PaymentcompletePage {
 
   }
   submitbtn(){
-    if(this.mailmob){
+    if(this.mailmob>0){
    let data={
     UserID:this.UserID,
     OutstandingAmount:this.mailmob
@@ -58,7 +58,7 @@ export class PaymentcompletePage {
   }
 }
   else{
-    this.utils.presentAlert("Oops", "Please enter details correctly.")
+    this.utils.presentAlert("Oops", "Please enter amount correctly.")
 
   }
   

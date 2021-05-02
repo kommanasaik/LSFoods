@@ -1,17 +1,39 @@
-<ion-header>
+<!-- <ion-header>
   <header [title]="headerTitle"></header>
   <ion-searchbar style="margin-top: 4px;width: 90%;border-radius: 5px;margin-left: 20px;background: none !important;" (ionCancel)="onCancel($event)"  placeholder="Search for Items" (ionInput)="getItemslist($event)"></ion-searchbar>
 </ion-header>
+   -->
+   <ion-header>
+    <!-- <header [title]="headerTitle"></header> -->
+    <ion-navbar color="custom">
+      <button ion-button menuToggle >
+          <ion-icon name='menu'></ion-icon>
+      </button>
+      <ion-title>Items List</ion-title>
+      <ion-buttons right>
+          <button ion-button icon-only (click)="opencatagorypage()" style="font-size: larger;">
+              <ion-icon name="ios-add-circle-outline"></ion-icon>
+          </button>
+      </ion-buttons>
+    </ion-navbar>
+    <ion-searchbar style="margin-top: 4px;width: 90%;border-radius: 5px;margin-left: 20px;background: none !important;" (ionCancel)="onCancel($event)"  placeholder="Search for Items" (ionInput)="getItemslist($event)"></ion-searchbar>
+  </ion-header>
   
-<ion-content padding  style="
-background: #f4f4f4;
-">
+  <ion-content style="background: url(../assets/images/listback.jpeg) no-repeat;">
 
+<img *ngIf="responsecount==0" style="display: block;margin-left: auto;margin-right: auto;" [src]="'assets/images/norecords.png'" alt=""/>
 
-  <div>
+<div style="margin-top: 10px;">
+
     <ion-grid *ngFor="let s of products">
       <ion-card>
         <ion-card-content>
+          <ion-row>
+            
+            <ion-col col-12>
+              <ion-icon (click)="gotoedit(s.ID)" name="md-open" role="img" class="icon icon-md ion-ios-open" aria-label="add" style="font-size: 20px;color: #b8860b;float: right;margin-left: 15px;"></ion-icon>
+            </ion-col>
+          </ion-row>
           <ion-row>
             <ion-col col-4>
               Item Name
@@ -37,15 +59,29 @@ background: #f4f4f4;
           </ion-row>
           <ion-row>
             <ion-col col-4>
-              Weight
+              Weight/Quant
+            </ion-col>
+            <ion-col col-1>
+              :
+            </ion-col>
+            <ion-col col-7 *ngIf="s.Quantity!=''">
+              {{s.Quantity}}
+            </ion-col>
+            <ion-col col-7 *ngIf="s.UnitsString!=''">
+              {{s.UnitsString}}
+            </ion-col>
+          </ion-row>
+          <!-- <ion-row>
+            <ion-col col-4>
+              Quantity
             </ion-col>
             <ion-col col-1>
               :
             </ion-col>
             <ion-col col-7>
-              {{s.UnitsString}}
+              {{s.Quantity}}
             </ion-col>
-          </ion-row>
+          </ion-row> -->
         </ion-card-content>
       </ion-card>
       

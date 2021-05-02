@@ -17,6 +17,7 @@ export class ServiceContactPage {
   /**
  * Accessing html element 
  */
+   responsecount:number;
 hidden:any=false;
 staffid:any;
 totalval:number; 
@@ -62,11 +63,17 @@ products:any;
     this.utils.presentLoading();
     this.utils.getmusalesReport(this.staffid).subscribe((Response) => {
       if(Response.length>0){
+        this.responsecount=1;
         this.totalval = Response.map(bill => bill.OrderAmount).reduce((acc, bill) => bill + acc);
         this.products=Response;
+        this.products.sort(function(a, b){
+          return b.SeqNo - a.SeqNo;
+      });
       }
       else{
-    this.utils.presentAlert("Oops", "No records found!");
+    //this.utils.presentAlert("Oops", "No records found!");
+    this.responsecount=0;
+
     this.products=[];
     this.hidden=true;
       }

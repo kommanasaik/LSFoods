@@ -52,11 +52,10 @@ cart:any=[];
 
   public addProduct(product){
     let added = false;
-    for (let p of this.cart) {
-      if (p.ID === product.ID) {
-        p.count += 1;
-        added = true;
-        break;
+    for (var i = 0; i < this.cart.length; i++) {
+      if (this.cart[i].ID === product.ID) {
+          this.cart.splice(i, 1);
+          added=false;
       }
     }
     if (!added) {
@@ -136,6 +135,13 @@ cart:any=[];
     });
     return await this.loading.present();
   }
+  async presentcatLoading() {
+    this.loading = await this.loadingController.create({
+       spinner: 'dots',
+      content: 'Please wait,Catagories Loading',
+    });
+    return await this.loading.present();
+  }
 
   /**
   * @returns common loader for entire application to dismiss loading 
@@ -158,6 +164,7 @@ cart:any=[];
       this.cart=passcart;
 
     }
+    
     console.log(this.cart);
 
     const httpOptions = {
@@ -181,6 +188,29 @@ cart:any=[];
     
   }
 
+  public deleteOrderbill(orderid):Observable<any>{
+    
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    return this.http.get(this.cfg.api+'/orderdetails/deletebill?OrderId='+orderid, httpOptions)
+    
+  }
+  public deliverorder(orderid,userddi):Observable<any>{
+    
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    return this.http.get(this.cfg.api+'/orderdetails/markasdeleverd?OrderID='+orderid+'&&StaffID='+userddi, httpOptions)
+    
+  }
+
   getProducts(): Observable<any> {
     
     const httpOptions = {
@@ -189,6 +219,43 @@ cart:any=[];
       })
     };
     return this.http.get(this.cfg.api+'/orderdetails/getproductsdetails', httpOptions)
+  }
+  
+  getallcreditcustomers(): Observable<any> {
+    
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    return this.http.get(this.cfg.api+'/orderdetails/getallcreditcustomers', httpOptions)
+  }
+  getpurchasereport(fromdate,todate): Observable<any> {
+    
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    return this.http.get(this.cfg.api+'/orderdetails/getpurchasereport?PurFromDate='+fromdate+'&PurToDate='+todate, httpOptions)
+  }
+  getPaymentTypeReport(fromdate,todate): Observable<any> {
+    
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    return this.http.get(this.cfg.api+'/orderdetails/getPaymentTypeReport?FromDate1='+fromdate+'&ToDate1='+todate, httpOptions)
+  }
+  getcreditcustomersreport(fromdate,todate,custid): Observable<any> {
+    
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    return this.http.get(this.cfg.api+'/orderdetails/getcreditcustomersreport?FromDate1='+fromdate+'&ToDate1='+todate+'&custId='+custid, httpOptions)
   }
   getsalesreport(fromdate,todate): Observable<any> {
     
@@ -245,6 +312,24 @@ cart:any=[];
       })
     };
     return this.http.get(this.cfg.api+'/orderdetails/getcatagorydetails?ID='+prodid, httpOptions)
+  }
+  getcredituserprofile(prodid): Observable<any> {
+    
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    return this.http.get(this.cfg.api+'/user/getcredituserprofile?UserID='+prodid, httpOptions)
+  }
+  getproductByid(prodid): Observable<any> {
+    
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    return this.http.get(this.cfg.api+'/orderdetails/getproductbyid?ID='+prodid, httpOptions)
   }
   getuseraccountdetails(data): Observable<any> {
     

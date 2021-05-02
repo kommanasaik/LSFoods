@@ -1,14 +1,23 @@
 <ion-header>
-  <header [title]="headerTitle"></header>
-  <!-- <ion-searchbar style="margin-top: 4px;width: 90%;border-radius: 5px;margin-left: 20px;background: none !important;" (ionCancel)="onCancel($event)"  placeholder="Search for Items" (ionInput)="getItemslist($event)"></ion-searchbar> -->
+  <!-- <header [title]="headerTitle"></header> -->
+  <ion-navbar color="custom">
+    <button ion-button menuToggle >
+        <ion-icon name='menu'></ion-icon>
+    </button>
+    <ion-title>Catagory List</ion-title>
+    <ion-buttons right>
+        <button ion-button icon-only (click)="opencatagorypage()" style="font-size: larger;">
+            <ion-icon name="ios-add-circle-outline"></ion-icon>
+        </button>
+    </ion-buttons>
+  </ion-navbar>
 </ion-header>
-  
-<ion-content padding  style="
-background: #f4f4f4;
-">
+<ion-content style="background: url(../assets/images/listback.jpeg) no-repeat;">
 
 
-  <div>
+<img *ngIf="responsecount==0" style="display: block;margin-left: auto;margin-right: auto;" [src]="'assets/images/norecords.png'" alt=""/>
+
+<div style="margin-top: 10px;">
     <ion-grid *ngFor="let s of products">
       <ion-card>
         <ion-card-content>

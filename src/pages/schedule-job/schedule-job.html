@@ -2,7 +2,8 @@
   <header [title]="headerTitle"></header>
 </ion-header>
 
-<ion-content padding>
+<ion-content style="background: url(../assets/images/listback.jpeg) no-repeat;">
+  
   <ion-item>
     <ion-label>From Date</ion-label>
     <ion-datetime displayFormat="YYYY-MM-DD" [(ngModel)]="fromdate" placeholder="Select Date">
@@ -17,6 +18,13 @@
 
   <br>
   <button ion-button block color="custom" (click)="submitDate()" [disabled]="  !fromdate || !todate">Submit</button>
+  <ion-row>
+    <ion-col>
+     <ion-searchbar  *ngIf="responsecount!=0" style="width: 92%;border-radius: 5px;margin-left: 16px;background: none !important;"
+    (ionCancel)="onCancel($event)" placeholder="Search Bill" (ionInput)="getItemslist($event)"></ion-searchbar>
+
+    </ion-col>
+  </ion-row>
   <ion-row style="float: right;" *ngIf="totalval>0">
     <ion-col>
       <p>Total Sales-
@@ -25,21 +33,41 @@
     </ion-col>
   </ion-row>
   <div>
+<img *ngIf="responsecount==0" style="display: block;margin-left: auto;margin-right: auto;" [src]="'assets/images/norecords.png'" alt=""/>
+    
     <ion-grid *ngFor="let s of products">
       <ion-card>
         <ion-card-content>
          
-          <ion-row>
-            <ion-col col-6>
+          <ion-row id=griddiv>
+            <ion-col col-3>
               {{s.OrderNo}}
             </ion-col>
             <ion-col col-1>
               -
             </ion-col>
-            <ion-col col-5>
+            <ion-col col-4>
               {{s.OrderAmount  | currency:'INR'}}
               
             </ion-col>
+            <ion-col col-4 *ngIf="usertype=='S'">
+              <button class="icondivs" (click)="previewprint(s.OrderID,s.OrderNo)" ion-button clear float-left color="dark">
+                <ion-icon name="ios-print"></ion-icon>
+              </button>
+            </ion-col>
+            <ion-col col-2 *ngIf="usertype=='A'">
+              <button  class="icondiv"  (click)="previewprint(s.OrderID,s.OrderNo)" ion-button clear float-left color="dark">
+                <ion-icon name="ios-print"></ion-icon>
+              </button>
+           
+            </ion-col>
+            <ion-col col-2 *ngIf="usertype=='A'">
+             
+              <button  class="icondivdel" (click)="deleteBill(s.OrderID,s.OrderNo)" ion-button clear float-left color="dark">
+                <ion-icon name="md-trash"></ion-icon>
+              </button>
+            </ion-col>
+            
           </ion-row>
 
           <!-- <ion-row>

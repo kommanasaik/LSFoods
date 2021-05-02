@@ -1,11 +1,13 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import {Router} from '@angular/router';
 
+// import {DatePipe} from '@angular/common';
+// import {WeightapdPipe} from '../pipes/weight/weight';
 import { MyApp } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { IonicStorageModule } from '@ionic/storage';
-
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
@@ -16,8 +18,7 @@ import { ServiceHistoryProvider } from '../providers/service-history/service-his
 import { PaymentServiceProvider } from '../providers/payment-service/payment-service';
 import { NotificationServiceProvider } from '../providers/notification-service/notification-service';
 import { ChatServiceProvider } from '../providers/chat-service/chat-service';
-import { PrintProvider } from '../providers/print/print';
-import { BluetoothSerial } from '@ionic-native/bluetooth-serial/ngx';
+import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
 
 import { Camera } from '@ionic-native/camera';
 import { File } from '@ionic-native/file';
@@ -34,17 +35,22 @@ import { ReviewServiceProvider } from '../providers/review-service/review-servic
 import { NetworkServiceProvider } from '../providers/network-service/network-service';
 import { Network } from '@ionic-native/network';
 import { ServicecallsProvider } from '../providers/servicecalls/servicecalls';
-// import {BluetoothSerial} from '@ionic-native/bluetooth-serial';
+import { PrinterDataProvider } from '../providers/printer-data/printer-data';
+import { PrinterProvider } from '../providers/printer/printer';
+// import { PrinterProvider } from '../providers/printer/printer';
+
 @NgModule({
   declarations: [
     MyApp,
-
+    
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(),
     HttpClientModule,
+    
+    // DatePipe
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -65,7 +71,6 @@ import { ServicecallsProvider } from '../providers/servicecalls/servicecalls';
     ReviewServiceProvider,
     NetworkServiceProvider,
     ChatServiceProvider,
-    PrintProvider,
     Camera,
     BluetoothSerial,
     File,
@@ -81,6 +86,8 @@ import { ServicecallsProvider } from '../providers/servicecalls/servicecalls';
     Network,
     PhotoViewer,
     ServicecallsProvider,
+    PrinterDataProvider,
+
     
   ]
 })

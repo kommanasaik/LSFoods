@@ -4,9 +4,9 @@
 
 
 <ion-content padding>
-  <ion-row style="margin-top: -20px;">
+  <ion-row>
     <ion-col col-12>
-      <img src="assets/images/billimg.png" alt="">
+      <img src="assets/images/sidemenu-logo.png" alt="">
     </ion-col>
   
   </ion-row>
@@ -18,29 +18,74 @@
     </ion-col>
   </ion-row>
   <ion-row>
-   
     <ion-col>
-     <ion-label  style="float: right;font-weight: 600;"> {{myDate  | date: 'dd/MM/yyyy'}}</ion-label>
+      <ion-label  style="float: left;font-weight: 600;"> {{billno}}</ion-label>
+     </ion-col>
+    <ion-col>
+     <ion-label  style="float: right;font-weight: 600;"> {{myDate  | date: 'dd/MM/yyyy , h:mm a'}}</ion-label>
     </ion-col>
+  </ion-row>
+  <ion-row *ngIf="this.cart[0].flag=='CC'">
+    <strong><ion-label style="margin-left: 5px;">{{cname}}</ion-label></strong>
   </ion-row>
   <hr class="new3">
 
+  <ion-row>
+    <ion-col col-4>
+      <strong>   Item Name</strong>
+    </ion-col>
+    <ion-col col-2>
+      <strong> Units</strong>
+  
+    </ion-col>
+    <ion-col col-2>
+    <strong> Rate</strong>
+    </ion-col>
+  
+    <ion-col col-2>
+
+      <span style="font-size: 13px;">
+        <strong>Discount  </strong>
+      </span>
+    </ion-col>
+    <ion-col col-2>
+  
+      <span style="float: right;" >
+        <strong>  Price</strong>
+      </span>
+    </ion-col>
+  </ion-row>
   <div *ngFor="let item of cart">
     <ion-row>
       <ion-col col-4>
         <ion-icon style="font-size: 1.2rem;color: green;margin-bottom: 2px;" name="ios-disc"></ion-icon>
         {{item.Name}}
       </ion-col>
-      <ion-col col-8>
-        <span style="float: right;">{{item.ItemQuantity}} x {{item.Price | currency:'INR'}} =
-          <strong>{{ item.ItemQuantity * item.Price | currency:'INR' }}</strong>
+      <ion-col col-2>
+        <span>  {{item.Weight | billweight:item.Type}}</span>
+
+      </ion-col>
+      <ion-col col-2>
+        <span>  {{item.ActualPrice  | currency:'INR'}}</span>
+
+      </ion-col>
+      <ion-col col-2>
+
+        <span >
+        {{ item.ItemDiscountAmount| currency:'INR' }}
+        </span>
+      </ion-col>
+      <ion-col col-2>
+
+        <span style="float: right;" >
+          <strong>{{ (item.ItemQuantity * item.Price)-(item.ItemDiscountAmount) | currency:'INR' }}</strong>
         </span>
       </ion-col>
     </ion-row>
   </div>
   <hr class="new3">
   <ion-row style="position:absolute;right: 18px;">
-    <p>Total ( {{totalquantity}} ) =
+    <p>Total Amount: ( {{totalquantity}} ) =
       <strong>{{totalbillamount | currency:'INR'}}</strong>
     </p>
   </ion-row>

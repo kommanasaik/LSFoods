@@ -20,7 +20,8 @@ import { BookServiceProvider } from '../../providers/book-service/book-service';
   templateUrl: 'salesreportbycat.html',
 })
 export class SalesreportbycatPage {
-  hidden=false;
+  hidden=true;
+  responsecount:number;
   hiddenDrop=false;
 /**
 * Value of the fromTime
@@ -42,7 +43,7 @@ todate: any;
 selectedDate: any;
 products:any;
 originalproducts:any;
-
+TotalWeight=0;
 /**
 * Value of the jobId
 */
@@ -74,6 +75,9 @@ catid:any;
     ) {
     this.headerTitle = "Sales Report by Items";
     this.getCatagories();
+    
+    this.fromdate = Moment(new Date()).format("YYYY-MM-DD").toString();
+    this.todate = Moment(new Date()).format("YYYY-MM-DD").toString();
   }
   getCatagories() {
     // this.utils.presentLoading();
@@ -82,16 +86,38 @@ catid:any;
     });
   }
   selectEmployee(emp){
+    this.totalval=0;
+  this.TotalWeight=0;
+
     this.catid=emp
     this.products = this.originalproducts.filter((item) => {
       return ((item.CatagoryID) ==this.catid );
     });
+    if(this.products.length>0){
+      this.responsecount=1;
+    this.totalval = this.products.map(bill => bill.Amount).reduce((acc, bill) => bill + acc);
+  //  this.TotalWeight = this.products.map(bill => bill.Weight).reduce((acc, bill) => bill + acc);
+  this.products.forEach(x => {     
+        
+    this.TotalWeight+=    x.Weight
+ 
+})
+this.hidden=false;
+
+    }
+    else{
+      this.responsecount=0;
+      this.totalval=0;
+      this.TotalWeight=0;
+
+    }
+
 }
 openDrop(){
   this.hiddenDrop=true;
 }
   submitDate() {
-   
+    this.hidden=true;
     this.fromdate = Moment(this.fromdate, 'YYYY-MM-DD').format('YYYY-MM-DD').toString();
     this.todate = Moment(this.todate, 'YYYY-MM-DD').format('YYYY-MM-DD').toString();
     if(this.fromdate && this.todate)
@@ -99,13 +125,25 @@ openDrop(){
     this.utils.presentLoading();
     this.utils.getitemsbysalesreport(this.fromdate,this.todate).subscribe((Response) => {
       if(Response.length>0){
-        this.totalval = Response.map(bill => bill.OrderAmount).reduce((acc, bill) => bill + acc);
+        this.responsecount=1;
+
+        this.totalval = Response.map(bill => bill.Amount).reduce((acc, bill) => bill + acc);
+       // this.TotalWeight = Response.map(bill => bill.Weight).reduce((acc, bill) => bill + acc);
+       Response.forEach(x => {     
+        
+        this.TotalWeight=+    x.Weight
+     
+    })
         this.originalproducts=Response;
         this.products=Response;
         this.hidden=true;
       }
       else{
-    this.utils.presentAlert("Oops", "No records found!");
+  //  this.utils.presentAlert("Oops", "No records found!");
+  this.products=[];
+  this.totalval=0;
+  this.TotalWeight=0;
+  this.responsecount=0;
 
       }
       this.utils.dismissLoading();

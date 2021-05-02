@@ -8,13 +8,14 @@
   </ion-navbar>
 
 </ion-header>
-<ion-content padding style="background: #f4f4f4;">
+<ion-content style="background: url(../assets/images/listback.jpeg) no-repeat;">
+
 
 
   <div>
     <ion-card >
       <ion-card-content>
-        <ion-label style="color: #be901f;font-size: 16px;font-weight: 600;margin-left: 5px;"> Order details</ion-label>
+        <ion-label style="color: #be901f;font-size: 18px;font-weight: 600;text-align: center;"> Order details</ion-label>
         <ion-row>
           <ion-col col-4>
             Bill NO
@@ -34,7 +35,7 @@
             :
           </ion-col>
           <ion-col col-7>
-            {{OrdeDateStr}}
+            {{OrdeDateStr  | date:'short'}}
           </ion-col>
         </ion-row>
 
@@ -49,18 +50,61 @@
             {{ProductAmount | currency:'INR'}}
           </ion-col>
         </ion-row>
-        <ion-label style="color: #be901f;font-size: 16px;font-weight: 600;margin-left: 5px;"> View Items</ion-label>
+        <ion-label style="color: #be901f;font-size: 16px;margin-left: 5px;"> Order Items</ion-label>
 
         <ion-row  *ngFor="let s of products">
           <ion-col col-12>
-            {{s.ProductName}} ({{s.ProductQuantity}})
+            {{s.ProductName}}
           </ion-col>
         </ion-row>
+        <div   *ngIf="this.usertype!='C'">
+        <ion-label style="color: #be901f;font-size: 16px;margin-left: 5px;">Customer Details</ion-label>
+
+       
+        <ion-row>
+          <ion-col col-4>
+         Name
+          </ion-col>
+          <ion-col col-1>
+            :
+          </ion-col>
+          <ion-col col-7>
+            {{CustomerName}}
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-4>
+        Mobile No
+          </ion-col>
+          <ion-col col-1>
+            :
+          </ion-col>
+          <ion-col col-7>
+            {{MobileNo }}
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-4>
+       Address
+          </ion-col>
+          <ion-col col-1>
+            :
+          </ion-col>
+          <ion-col col-7 style="word-break: break-all;">
+            {{Address}}
+          </ion-col>
+        </ion-row>
+      </div>
       </ion-card-content>
     </ion-card>
   
   </div>
-
+  <div  *ngIf="this.usertype!='C'" id="btnsubmit"
+    style="padding: 5px; width: 100%;">
+    <button ion-button block tappable style="background-color: #b8860b;" (click)="proceedtocheckout()">
+      Confirm Order
+    </button>
+  </div>
 </ion-content>
 
 <ion-footer>

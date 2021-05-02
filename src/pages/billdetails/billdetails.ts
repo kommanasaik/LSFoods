@@ -5,8 +5,9 @@ import { BehaviorSubject } from 'rxjs';
 import { UtilsServiceProvider } from '../../providers/utils-service/utils-service';
 import { BookServicePage } from '../book-service/book-service';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { BookServiceProvider } from '../../providers/book-service/book-service';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
-
+import {WeightapdPipe} from '../../pipes/weight/weight';
 /**
  * Generated class for the BilldetailsPage page.
  *
@@ -26,6 +27,7 @@ export class BilldetailsPage {
   custid="";
   hiddenForm=false;
   hiddenForm1=true;
+  paymentname='';
   signup={
     state:0
   }
@@ -46,7 +48,12 @@ export class BilldetailsPage {
     state_id:5,
     state_name:'Paytm'
   }
+  ,{
+    state_id:6,
+    state_name:'Card'
+  }
 ];
+custhidden:boolean=false;
   custname="";
   custmobile="";
   totalbillamount:number;
@@ -58,10 +65,14 @@ export class BilldetailsPage {
   editdata:any;
   creditcustname="";
   creditcustmobile="";
+  LocationID="";
+  locations:any;
+  usertype:any;
   constructor(
       public authService: AuthServiceProvider,
       public navCtrl: NavController,private fb: FormBuilder, public navParams: NavParams,
-      public utils: UtilsServiceProvider,
+    public bookService: BookServiceProvider,
+    public utils: UtilsServiceProvider,
     ) {
       if(navParams.data[0]==undefined){
   this.navCtrl.setRoot("BookServicePage");
@@ -69,12 +80,27 @@ export class BilldetailsPage {
       }else{
       this.cart= navParams.data;
     this.RegisterValidation();
-
+    this.getCatagories()
       }
       
+this.usertype=localStorage.getItem("UserType");
 console.log(this.cart);
 
   }
+  getCatagories() {
+    //  this.utils.presentcatLoading();
+     this.bookService.getLocations().subscribe((Response) => {
+       this.locations = Response;
+       this.locations.sort((a,b) => a.Value > b.Value ? 1 : -1)
+           //  this.utils.dismissLoading();
+     });
+   }
+   ProductonChange($event){
+  
+    this.LocationID="";
+    this.LocationID=$event.toString();
+    this.hiddenForm1=false;
+    }
   RegisterValidation() {
     this.registerForm = this.fb.group({
     //  Pin: ['', Validators.required],
@@ -104,6 +130,15 @@ console.log(this.cart);
     if(this.cart.length>0){
     this.totalbillamount=this.cart[0].BillTotalAmout;
     this.totalquantity=this.cart[0].BillQuantity;
+    if(this.cart[0].flag=="CC"){
+      this.custhidden=true;
+
+      this.custid=this.cart[0].mobileno;
+      this.creditcustmobile=this.cart[0].mobileno;
+
+      this.creditcustname=this.cart[0].cname;
+
+    }
   }}
   
   // goBack(){
@@ -125,7 +160,8 @@ console.log(this.cart);
         this.utils.removeProduct(product);   
       }
       selectEmployee(emp){
-          if(emp==2){
+        this.paymentname=emp.state_name
+          if(emp.state_id==2){
             this.hidden=true;
         this.hiddenForm=false;
 
@@ -162,8 +198,25 @@ this.creditcustname=Response.Name;
         let custname=this.custname;
         let custmobile=this.custmobile;
         let paymentmode=0;
+        let paymentmodess="";
         paymentmode=this.signup.state;
+        paymentmodess=paymentmode==2?"Credit":this.paymentname;
+        if(this.usertype=="C"){
+          paymentmode=1;
+          paymentmodess="Cash";
+        }
+        for (var oa = 0; oa < this.cart.length; oa++) {
+                     
+          this.cart[oa]["PaymentType"]=paymentmodess;
+          this.cart[oa]["LocationID"]=this.LocationID;
+          if(this.usertype=="C"){
+          this.cart[oa]["OrderStatus"]=1;
+          }
+          else{
 
+            this.cart[oa]["OrderStatus"]=2;
+          }
+          }
         let itemcount = 0;
         if(paymentmode>0){
           if(paymentmode==2){
@@ -174,19 +227,28 @@ this.creditcustname=Response.Name;
                 for (var o = 0; o < this.cart.length; o++) {
                      
                   this.cart[o]["userid"]=this.custuserid;
+                  
                   }
-               this.utils.ProductTransactions().subscribe((Response) => {
+               this.utils.ProductTransactions(this.cart ).subscribe((Response) => {
                   console.log(Response);
                   if (Response.ErrorCode > 0) {
                     //this.removeallcart();
                     
                     this.cart[0]["username"]=this.creditcustname;
                     this.cart[0]["phone"]=this.creditcustmobile;
+                   this.cart[0]["billno"]=Response.BillNo;
+                   
 
+
+                   if(this.usertype!="C"){
                         
                         this.navCtrl.setRoot("NotificationsPage",this.cart);
                         
-                    
+                   }
+                   else{
+                    this.utils.presentAlert("Success", "Thank you for placing order.");
+                    this.navCtrl.setRoot("BookServicePage",this.cart);
+                   }
                     this.utils.dismissLoading();
                   }
                   else {
@@ -232,15 +294,24 @@ this.creditcustname=Response.Name;
                      
                     this.cart[o]["userid"]=UResponse.UserID;
                     }
-                    this.utils.ProductTransactions().subscribe((Response) => {
+                    this.utils.ProductTransactions(this.cart).subscribe((Response) => {
                       console.log(Response);
                       if (Response.ErrorCode > 0) {
                        // this.removeallcart();
                     this.cart[0]["username"]=UserRegisterData.FirstName;
                     this.cart[0]["phone"]=UserRegisterData.MobileNo;
+                    this.cart[0]["billno"]=Response.BillNo;
 
                         
-                        this.navCtrl.setRoot("NotificationsPage",this.cart);
+                    if(this.usertype!="C"){
+                        
+                      this.navCtrl.setRoot("NotificationsPage",this.cart);
+                      
+                 }
+                 else{
+                  this.utils.presentAlert("Success", "Thank you for placing order.");
+                  this.navCtrl.setRoot("BookServicePage",this.cart);
+                 }
                         
                         this.utils.dismissLoading();
                       }
@@ -270,10 +341,18 @@ this.creditcustname=Response.Name;
                     
                     this.cart[0]["username"]="";
                     this.cart[0]["phone"]="";
+                    this.cart[0]["billno"]=Response.BillNo;
 
                         
-                        this.navCtrl.setRoot("NotificationsPage",this.cart);
+                    if(this.usertype!="C"){
                         
+                      this.navCtrl.setRoot("NotificationsPage",this.cart);
+                      
+                 }
+                 else{
+                  this.utils.presentAlert("Success", "Thank you for placing order.");
+                  this.navCtrl.setRoot("BookServicePage",this.cart);
+                 }
                     
                     this.utils.dismissLoading();
                   // }

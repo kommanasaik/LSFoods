@@ -77,6 +77,7 @@ export class NewmybookingsPage {
       Country: this.registerForm.value.Country,
       City: this.registerForm.value.City,
       PinCode: this.registerForm.value.Pin,
+      OutStandingAmount:0
     }
 
     if(UserRegisterData.Gmail!="" && UserRegisterData.MobileNo!="" && UserRegisterData.Password!=""){

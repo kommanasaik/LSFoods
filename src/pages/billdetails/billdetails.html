@@ -4,44 +4,120 @@
       <button style="color: white;font-size: 25px;" ion-button clear float-left (click)="backPage()" color="custom">
         <ion-icon name="arrow-round-back"></ion-icon>
       </button>
-      <ion-title style="margin-top: 10px;color: white;">Bill Details</ion-title>
+      <ion-title style="color: white;margin-top: 10px;">Bill Details</ion-title>
     </ion-navbar>
 
   </ion-header>
 <ion-content padding="'true'" class="has-header">
+  <div  *ngIf="custhidden">
+    <ion-row>
+      <ion-col>
+       <span style="float: left;
+          font-size: 20px;">{{creditcustname}}</span><span style="float: right;
+    font-size: 20px;">{{creditcustmobile}}</span>
+      </ion-col>
+    </ion-row>
+    <hr class="new3">
+  </div>
 
+<ion-row>
+  <ion-col col-4>
+    <span style="float: left;">
+    <strong>   Item Name</strong>
+  </span>
+  </ion-col>
+  <ion-col col-2>
+    <span style="float: left;">
+    <strong> Units</strong>
+    </span>
+  </ion-col>
+  <ion-col col-2>
+  <strong> Rate</strong>
+  </ion-col>
+
+  <ion-col col-2>
+
+    <span style="font-size: 13px;">
+      <strong>Discount  </strong>
+    </span>
+  </ion-col>
+  <ion-col col-2>
+
+    <span style="float: right;" >
+      <strong>  Price</strong>
+    </span>
+  </ion-col>
+</ion-row>
+<hr class="new3">
 
   <div *ngFor="let item of cart">
     <ion-row>
       <ion-col col-4>
+        <span style="float: left;">
         <ion-icon style="font-size: 1.2rem;color: green;margin-bottom: 2px;" name="ios-disc"></ion-icon>
         {{item.Name}}
+      </span>
       </ion-col>
-      <ion-col col-8>
-        <span style="float: right;">{{item.ItemQuantity}} x {{item.Price | currency:'INR'}} =
-          <strong>{{ item.ItemQuantity * item.Price | currency:'INR' }}</strong>
+      <ion-col col-2>
+        
+        <span style="float: left;">  {{item.Weight | weightapd:item.Type}}</span>
+
+      </ion-col>
+      <ion-col col-2>
+        <span>  {{item.ActualPrice  | currency:'INR'}}</span>
+
+      </ion-col>
+
+      <ion-col col-2>
+
+        <span >
+        {{ item.ItemDiscountAmount | currency:'INR' }}
+        </span>
+      </ion-col>
+      <ion-col col-2>
+
+        <span style="float: right;" >
+          <strong>{{ (item.ItemQuantity * item.Price)-(item.ItemDiscountAmount) | currency:'INR' }}</strong>
         </span>
       </ion-col>
     </ion-row>
   </div>
   <hr class="new3">
   <ion-row style="position:absolute;right: 18px;">
-    <p>Total ( {{totalquantity}} ) =
+    <p>Total Amount: ( {{totalquantity}} ) =
       <strong>{{totalbillamount | currency:'INR'}}</strong>
     </p>
   </ion-row>
   
   <br>
+<div *ngIf="this.usertype=='C'">
+  <ion-row style="margin-top: 50px;">
+    <ion-col>
+      <ion-label style="text-align: center;font-size: 20px;font-weight: 500;color: #be901f;">Location</ion-label>
+      <ion-list inset class="no-border" style="margin: 0px;">
+        <ion-item style="padding-left: 0px;border: 3px solid #d9d1d1;border-radius: 5px;">
+          <ion-select id="ions" interface="action-sheet"  (ionChange)="ProductonChange($event)"
+          style="width: 100% !important;max-width:none !important;" placeholder="Select Location">
+          <ion-option *ngFor="let state of locations"  [value]="state.ID">
+            {{state.Value}}</ion-option>
+        </ion-select>
 
-     
+          
+        </ion-item>
+
+      </ion-list>
+    </ion-col>
+  </ion-row>
+</div>
+    <div *ngIf="this.usertype!='C'">
       <ion-row style="margin-top: 50px;">
         <ion-col>
           <ion-label style="text-align: center;font-size: 20px;font-weight: 500;color: #be901f;">Payment Mode</ion-label>
           <ion-list inset class="no-border" style="margin: 0px;">
             
             <ion-item style="padding-left: 0px;border: 3px solid #d9d1d1;border-radius: 5px;">
-              <ion-select id="ions" [(ngModel)]="signup.state" style="width: 100% !important;max-width:none !important ;" placeholder="Select Payment Mode">
-                <ion-option *ngFor="let state of statelist" [value]="state.state_id" (ionSelect)="selectEmployee($event, state)">{{state.state_name}}</ion-option>
+              <ion-select interface="action-sheet"  id="ions" [(ngModel)]="signup.state" style="width: 100% !important;max-width:none !important ;" placeholder="Select Payment Mode">
+                <ion-option *ngFor="let state of statelist" [value]="state.state_id" (ionSelect)="selectEmployee(state)">{{state.state_name}}</ion-option>
               </ion-select>
               
             </ion-item>
@@ -151,7 +227,7 @@
       
     </form>
   </div>
-
+</div> 
   <div *ngIf="!hiddenForm1" id="btnsubmit" [ngStyle]="{'display':cart.length>0 ? 'inline': 'none'}"
     style="padding: 5px;; width: 100%;">
     <button ion-button block tappable style="background-color: #b8860b;" (click)="proceedtocheckout()">

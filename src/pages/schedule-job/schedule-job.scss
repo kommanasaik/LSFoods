@@ -9,4 +9,32 @@ page-schedule-job {
    ion-grid.grid {
     margin-bottom: -20px;
 }
+#griddiv ion-col.col {
+    display: block;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+.icondiv{
+    font-size: 20px;
+    color: white;
+    border-radius: 100%;
+    background: black;
+    width: 100%;
+}
+.icondivs{
+    font-size: 20px;
+    color: white;
+    border-radius: 100%;
+    background: black;
+    width: 45%;
+    
+}
+
+.icondivdel{
+    font-size: 20px;
+    color: white;
+    border-radius: 100%;
+    background: red;
+    width: 100%;
+}
 }

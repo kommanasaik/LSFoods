@@ -18,6 +18,7 @@ export class ReviewsPage {
 * Value of the header title
 */
   headerTitle;
+responsecount=0;
 
   /**
 * Value of the searchType
@@ -44,6 +45,14 @@ export class ReviewsPage {
   ) {
     this.headerTitle = "Items List";
   }
+  gotoedit(prodid){
+    let data={
+      prodid:prodid,
+      command:'U'
+    }
+    this.navCtrl.push("AllservicesPage",data)
+  }
+  
   ionViewDidLoad() {
     this.RegisterValidation();
   }
@@ -59,11 +68,19 @@ export class ReviewsPage {
       this.products = this.products.filter((item) => {
         return (item.Name.toLowerCase().indexOf(val.toLowerCase()) > -1 );
       })
-    
+    if(this.products.length>0){
+      this.responsecount=1;
+
+    }
+    else{
+this.responsecount=0;
+
+    }
     }
     else
     {
-      this.products=this.searchresponse
+      this.products=this.searchresponse;
+      this.responsecount=1;
   
     }
   
@@ -75,9 +92,13 @@ export class ReviewsPage {
        if(Response.length<=0){
        this.utils.dismissLoading();
        this.products=[]; 
+       this.responsecount=0;
+
        }
        else
        {
+this.responsecount=1;
+
        if(Response!="")
        {
          this.products=Response;
@@ -91,7 +112,10 @@ export class ReviewsPage {
      }
      });
    }
-  
+   opencatagorypage(){
+    this.navCtrl.push("AllservicesPage");
+    
+  }
 
 
 }

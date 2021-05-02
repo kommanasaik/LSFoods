@@ -55,7 +55,7 @@ headerTitle:any;
           outamt:outamt,
           user:this.mailmob
         }
-        this.navCtrl.setRoot("PaymentcompletePage",data);
+        this.navCtrl.push("PaymentcompletePage",data);
       }
       else{
 

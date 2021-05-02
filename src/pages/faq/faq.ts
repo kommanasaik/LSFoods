@@ -23,6 +23,7 @@ export class FaqPage {
 * Value of the header title
 */
   headerTitle;
+responsecount=0;
   
   /**
    * 
@@ -48,9 +49,13 @@ export class FaqPage {
        if(Response.length<=0){
        this.utils.dismissLoading();
        this.products=[]; 
+this.responsecount=0;
+
        }
        else
        {
+this.responsecount=1;
+
        if(Response!="")
        {
          this.products=Response;
@@ -70,7 +75,12 @@ export class FaqPage {
       prodid:prodid,
       command:'U'
     }
-    this.navCtrl.setRoot("AllsubservicesPage",data)
+    this.navCtrl.push("AllsubservicesPage",data)
+  }
+
+  opencatagorypage(){
+    this.navCtrl.push("AllsubservicesPage");
+    
   }
   
 }

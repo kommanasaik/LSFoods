@@ -17,6 +17,7 @@ export class ServiceJobHistoryPage {
   /**
  * defining reviewForm
  */
+responsecount=0;
 
   /**
 * Value of the header title
@@ -50,11 +51,14 @@ export class ServiceJobHistoryPage {
 * validating reviewForm
 */
 products:any;
+usertype:any;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public utils: UtilsServiceProvider,
   ) {
+this.usertype=localStorage.getItem("UserType");
+
     this.headerTitle = "My orders";
 
     //this.RegisterValidation();
@@ -68,15 +72,22 @@ products:any;
       this.utils.getmyorders().subscribe((Response) => {
       console.log(Response);
       if(Response.length<=0){
+        this.responsecount=0;
       this.utils.dismissLoading();
       this.products=[]; 
       }
       else
       {
+        this.responsecount=1;
+
       if(Response!="")
       {
+        
         this.products=Response;
         this.searchresponse=Response;
+        this.searchresponse.sort(function(a, b){
+          return b.SeqNo - a.SeqNo;
+      });
       console.log(this.products);
       this.utils.dismissLoading();
       }
@@ -93,8 +104,12 @@ products:any;
       OrderID:OrderID.OrderID  ,
       Billno:OrderID.BillNo  ,
 
-      OrdeDateStr:OrderID.OrdeDateStr,
-      TotalAmount:OrderID.TotalAmount
+      OrdeDateStr:OrderID.OrdeDate,
+      TotalAmount:OrderID.TotalAmount,
+      CustomerName:OrderID.CustomerName  ,
+
+      MobileNo:OrderID.Phoneno,
+      Address:OrderID.Address,
     }
     this.navCtrl.setRoot("PaymentsHistoryPage",data);
 

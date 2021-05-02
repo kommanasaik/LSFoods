@@ -1,0 +1,27 @@
+<ion-header>
+  <header [title]="headerTitle"></header>
+</ion-header>
+
+<ion-content padding>
+  <form  [formGroup]="productForm"  (ngSubmit)="onProductSubmit()">
+    <ion-item>
+      <ion-label floating>
+        <ion-icon name="logo-buffer" item-start class="text-primary"></ion-icon>
+        Noof Chicken</ion-label>
+      <ion-input type="number" formControlName="ProductName"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>
+        <ion-icon name="ios-closed-captioning" item-start class="text-primary"></ion-icon>
+        Flesh in Kgs</ion-label>
+      <ion-input type="number" formControlName="Code" ></ion-input>
+    </ion-item>
+  
+   <ion-row>
+    <ion-col>
+      <button ion-button color="custom" block type="submit" [disabled]="!productForm.valid">Save</button>
+    </ion-col>
+  </ion-row>
+  </form>
+  
+</ion-content>

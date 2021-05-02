@@ -1,0 +1,25 @@
+page-credcustomerreport {
+    ion-calendar .calendar-row .select {
+        background: #b8860b;
+    }
+   .sCard{
+       background-color: #b8860b;
+   }
+  
+   ion-grid.grid {
+    margin-bottom: -20px;
+}
+.viewButton
+{
+    width: 25%;
+    // float: right;
+    font-size: 11px;
+    background: white;
+    color: black;
+    border: 2px solid #b8860b;
+    height: 25px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+}
