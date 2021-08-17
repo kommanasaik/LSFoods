@@ -28,6 +28,7 @@
     "@ionic-native/file-transfer": "^4.20.0",
     "@ionic-native/geolocation": "^4.20.0",
     "@ionic-native/google-maps": "^4.8.2",
+    "@ionic-native/launch-navigator": "^4.20.0",
     "@ionic-native/local-notifications": "^4.20.0",
     "@ionic-native/media": "^4.20.0",
     "@ionic-native/media-capture": "^4.20.0",
@@ -67,9 +68,11 @@
   "devDependencies": {
     "@ionic/app-scripts": "^3.2.3",
     "cordova-android": "^7.0.0",
+    "cordova-plugin-actionsheet": "^2.3.3",
     "cordova-plugin-bluetooth-serial": "^0.4.7",
     "cordova-plugin-console": "^1.0.7",
     "cordova-plugin-device": "^2.0.2",
+    "cordova-plugin-dialogs": "^2.0.2",
     "cordova-plugin-geolocation": "~2.4.1",
     "cordova-plugin-ionic-keyboard": "^2.2.0",
     "cordova-plugin-ionic-webview": "^4.1.3",
@@ -78,7 +81,8 @@
     "cordova-plugin-whitelist": "^1.3.3",
     "cordova-sqlite-storage": "^5.1.0",
     "ionic-plugin-keyboard": "^2.2.1",
-    "typescript": "~2.6.2"
+    "typescript": "~2.6.2",
+    "uk.co.workingedge.phonegap.plugin.launchnavigator": "^5.0.5"
   },
   "description": "An Ionic project",
   "cordova": {
@@ -115,7 +119,11 @@
       "cordova-plugin-console": {},
       "ionic-plugin-keyboard": {},
       "cordova-plugin-bluetooth-serial": {},
-      "cordova-sqlite-storage": {}
+      "cordova-sqlite-storage": {},
+      "uk.co.workingedge.phonegap.plugin.launchnavigator": {
+        "GOOGLE_API_KEY_FOR_ANDROID": "AIzaSyBWhb96QdSaD60TwPLzows63jqdOVDZgvs",
+        "OKHTTP_VERSION": "3.12.0"
+      }
     },
     "platforms": [
       "ios",

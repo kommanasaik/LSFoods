@@ -77,7 +77,7 @@ export class ProfilePage {
 */
   ionViewDidLoad() {
     this.capturedUrl = "";
-    this.getProfileData();
+   // this.getProfileData();
   }
 
   /**

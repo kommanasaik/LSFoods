@@ -1,0 +1,100 @@
+<ion-header>
+  <!-- <header [title]="headerTitle"></header> -->
+  <ion-navbar color="custom">
+    <button ion-button menuToggle >
+        <ion-icon name='menu'></ion-icon>
+    </button>
+    <ion-title>Staff List</ion-title>
+    <ion-buttons right>
+        <button ion-button icon-only (click)="opencatagorypage()" style="font-size: larger;">
+            <ion-icon name="ios-add-circle-outline"></ion-icon>
+        </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content style="background: url(../assets/images/listback.jpeg) no-repeat;">
+  <img *ngIf="responsecount==0" style="display: block;margin-left: auto;margin-right: auto;" [src]="'assets/images/norecords.png'" alt=""/>
+
+  <div style="margin-top: 10px;">
+    <ion-grid *ngFor="let s of products">
+      <ion-card>
+        <ion-card-content>
+          <!-- <ion-row>
+            
+            <ion-col col-12>
+              <ion-icon (click)="gotoedit(s.UserId)" name="md-open" role="img" class="icon icon-md ion-ios-open" aria-label="add" style="font-size: 20px;color: #b8860b;float: right;margin-left: 15px;"></ion-icon>
+            </ion-col>
+          </ion-row> -->
+          <ion-row>
+            <ion-col col-4>
+             Name
+            </ion-col>
+            <ion-col col-1>
+              :
+            </ion-col>
+            <ion-col col-7>
+              {{s.Name}}
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col col-4>
+              Phone No
+            </ion-col>
+            <ion-col col-1>
+              :
+            </ion-col>
+            <ion-col col-7>
+              {{s.ContatctNo}}
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-4>
+              Email
+            </ion-col>
+            <ion-col col-1>
+              :
+            </ion-col>
+           
+            <ion-col col-7>
+              {{s.Email}}
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-4>
+              Password
+            </ion-col>
+            <ion-col col-1>
+              :
+            </ion-col>
+           
+            <ion-col col-7>
+              {{s.Password }}
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col col-4>
+              LocationName
+            </ion-col>
+            <ion-col col-1>
+              :
+            </ion-col>
+           
+            <ion-col col-7>
+              {{s.LocationName }}
+            </ion-col>
+          </ion-row>
+        
+        </ion-card-content>
+      </ion-card>
+      
+    </ion-grid>
+  </div>
+
+</ion-content>
+
+<ion-footer>
+  <footer></footer>
+</ion-footer>

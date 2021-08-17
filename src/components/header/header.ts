@@ -49,5 +49,7 @@ export class HeaderComponent {
     this.storage.remove('user_email');
     this.storage.remove('auth');
   }
-
+  Navigate_To_Profile(){
+    
+  }
 }

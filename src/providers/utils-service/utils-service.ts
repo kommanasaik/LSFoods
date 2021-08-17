@@ -220,7 +220,15 @@ cart:any=[];
     };
     return this.http.get(this.cfg.api+'/orderdetails/getproductsdetails', httpOptions)
   }
-  
+  getallstaff(): Observable<any> {
+    
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    return this.http.get(this.cfg.api+'/orderdetails/staffdetailsdata', httpOptions)
+  }
   getallcreditcustomers(): Observable<any> {
     
     const httpOptions = {

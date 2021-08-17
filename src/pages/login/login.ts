@@ -102,9 +102,14 @@ loginForm:any;
             localStorage.setItem("user_phone", result.MobileNo)
             localStorage.setItem("user_email", result.Gmail)
             localStorage.setItem("UserType", result.UserType)
-          
-            this.navCtrl.setRoot("BookServicePage");
+          if(result.UserType=="C"){
+            
+            this.navCtrl.setRoot("CustomerorderPage");
 
+          }
+          else{
+            this.navCtrl.setRoot("BookServicePage");
+          }
             //  this.navCtrl.setRoot("MyApp");
 
   //this.navCtrl.navigate['BookServicePage'];

@@ -32,6 +32,13 @@
       </p>
     </ion-col>
   </ion-row>
+  <ion-row style="float: left;" *ngIf="totaldis>0">
+    <ion-col>
+      <p>Total Discount-
+        <strong>{{totaldis  | currency:'INR'}}</strong>
+      </p>
+    </ion-col>
+  </ion-row>
   <div>
 <img *ngIf="responsecount==0" style="display: block;margin-left: auto;margin-right: auto;" [src]="'assets/images/norecords.png'" alt=""/>
     

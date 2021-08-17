@@ -58,9 +58,13 @@ usertype:any;
     public utils: UtilsServiceProvider,
   ) {
 this.usertype=localStorage.getItem("UserType");
-
+    if(this.usertype==="C"){
     this.headerTitle = "My orders";
+    }else{
 
+    this.headerTitle = "Customer orders";
+      
+    }
     //this.RegisterValidation();
  
   }
@@ -109,9 +113,13 @@ this.usertype=localStorage.getItem("UserType");
       CustomerName:OrderID.CustomerName  ,
 
       MobileNo:OrderID.Phoneno,
-      Address:OrderID.Address,
+      Address:OrderID.address,
+      
+      latitude:OrderID.latitude,
+      longitude:OrderID.longitude,
     }
-    this.navCtrl.setRoot("PaymentsHistoryPage",data);
+    
+    this.navCtrl.push("PaymentsHistoryPage",data);
 
 
   }

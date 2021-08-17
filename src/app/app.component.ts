@@ -39,8 +39,9 @@ export class MyApp {
   /**
 * Value of the AppLogo
 */
-  AppLogo = 'assets/images/sidemenu-logo.png';
+AppLogo = 'assets/images/sidemenu-logo.png';
 usertype:any;
+UserName:any='';
   /**
 *  loads first when entering to the page
 *  getting stored values in the app
@@ -66,6 +67,10 @@ lsublist:any;  rshowSubmenu: boolean = false;  lshowSubmenu: boolean = false;
     public events: Events,
 
   ) {
+    this.usertype=localStorage.getItem("UserType");
+    this.UserName=localStorage.getItem("user_name");
+
+
     this.events.subscribe('my-message', (data) =>{
     //  if(data=="C"){
     //   this.pages = [
@@ -98,7 +103,7 @@ lsublist:any;  rshowSubmenu: boolean = false;  lshowSubmenu: boolean = false;
     //     }
     if(data=="C"){
       this.pages = [
-        { title: 'Book Order', component: "BookServicePage", icon: "ios-basket",sublist:"N" ,menuclose:"menuClose"},
+        { title: 'Book Order', component: "CustomerorderPage", icon: "ios-basket",sublist:"N" ,menuclose:"menuClose"},
         { title: 'My Orders', component: "ServiceJobHistoryPage", icon: "ios-basket",sublist:"N",menuclose:"menuClose" },
         { title: 'Logout', component: "LoginPage", icon: "md-log-out",sublist:"N",menuclose:"menuClose" },
           ];
@@ -108,7 +113,7 @@ lsublist:any;  rshowSubmenu: boolean = false;  lshowSubmenu: boolean = false;
             { title: 'Book Order', component: "BookServicePage", icon: "ios-basket",sublist:"N",menuclose:"menuClose" },
             { title: 'Customer Orders', component: "ServiceJobHistoryPage", icon: "ios-basket",sublist:"N",menuclose:"menuClose" },
             { title: 'Credit Customer Entry', component: "CustomerwiseentryPage", icon: "ios-basket",sublist:"N",menuclose:"menuClose" },
-            { title: 'Create Staff', component: "StaffPage", icon: "logo-buffer",sublist:"N",menuclose:"menuClose" },
+           // { title: 'Create Staff', component: "StaffPage", icon: "logo-buffer",sublist:"N",menuclose:"menuClose" },
             { title: 'Lists', component: "Lists", icon: "md-list",sublist:"L",menuclose:"" },
            
             { title: 'Daily Stock', component: "DailystockPage", icon: "ios-basket",sublist:"N",menuclose:"menuClose" },
@@ -117,6 +122,7 @@ lsublist:any;  rshowSubmenu: boolean = false;  lshowSubmenu: boolean = false;
             { title: 'Reports', component: "Reports", icon: "ios-albums",sublist:"R",menuclose:"" },
             { title: 'DayEnd Sales', component: "ServiceContactPage", icon: "card",sublist:"N",menuclose:"menuClose" },
             { title: 'Printer Setting', component: "PrinterSettingsPage", icon: "settings",sublist:"N",menuclose:"menuClose" },
+            // { title: 'Profile', component: "ProfilePage", icon: "md-person",sublist:"N",menuclose:"menuClose" },
             { title: 'Logout', component: "LoginPage", icon: "md-log-out",sublist:"N",menuclose:"menuClose" },
           ];
           this.rsublist=[
@@ -128,6 +134,8 @@ lsublist:any;  rshowSubmenu: boolean = false;  lshowSubmenu: boolean = false;
         
         this.lsublist=[
           { title: 'Credit Customer List', component: "CreditcustomerlistPage", icon: "md-list",sublist:"L",menuclose:"menuClose" },
+          { title: 'Staff List', component: "StafflistPage", icon: "md-list",sublist:"L",menuclose:"menuClose" },
+
           { title: 'Items List', component: "ReviewsPage", icon: "md-list",sublist:"L",menuclose:"menuClose" },
           { title: 'Catagory List', component: "FaqPage", icon: "md-list",sublist:"L",menuclose:"menuClose" },
         ]
@@ -165,15 +173,21 @@ lsublist:any;  rshowSubmenu: boolean = false;  lshowSubmenu: boolean = false;
     this.initializeApp();
 
       if(localStorage.getItem("user_id")!="" && localStorage.getItem("user_id")!=null){
-        this.rootPage = "BookServicePage"
+        if(this.usertype==="C"){
+          // this.navCtrl.setRoot("CustomerorderPage");
+          this.rootPage = "CustomerorderPage"
+        }
+        else{
+          this.rootPage = "BookServicePage"
+        }
+        
       }
       else{
         this.rootPage = "IntroductionSliderPage"
       }
-this.usertype=localStorage.getItem("UserType");
 if(this.usertype=="C"){
   this.pages = [
-        { title: 'Book Order', component: "BookServicePage", icon: "ios-basket",sublist:"N" ,menuclose:"menuClose"},
+        { title: 'Book Order', component: "CustomerorderPage", icon: "ios-basket",sublist:"N" ,menuclose:"menuClose"},
         { title: 'My Orders', component: "ServiceJobHistoryPage", icon: "ios-basket",sublist:"N",menuclose:"menuClose" },
         { title: 'Logout', component: "LoginPage", icon: "md-log-out",sublist:"N",menuclose:"menuClose" },
       ];
@@ -183,7 +197,7 @@ if(this.usertype=="C"){
         { title: 'Book Order', component: "BookServicePage", icon: "ios-basket",sublist:"N",menuclose:"menuClose" },
         { title: 'Customer Orders', component: "ServiceJobHistoryPage", icon: "ios-basket",sublist:"N",menuclose:"menuClose" },
         { title: 'Credit Customer Entry', component: "CustomerwiseentryPage", icon: "ios-basket",sublist:"N",menuclose:"menuClose" },
-        { title: 'Create Staff', component: "StaffPage", icon: "logo-buffer",sublist:"N",menuclose:"menuClose" },
+        //{ title: 'Create Staff', component: "StaffPage", icon: "logo-buffer",sublist:"N",menuclose:"menuClose" },
         { title: 'Lists', component: "Lists", icon: "md-list",sublist:"L",menuclose:"" },
        
         { title: 'Daily Stock', component: "DailystockPage", icon: "ios-basket",sublist:"N",menuclose:"menuClose" },
@@ -192,6 +206,8 @@ if(this.usertype=="C"){
         { title: 'Reports', component: "Reports", icon: "ios-albums",sublist:"R",menuclose:"" },
         { title: 'DayEnd Sales', component: "ServiceContactPage", icon: "card",sublist:"N",menuclose:"menuClose" },
         { title: 'Printer Setting', component: "PrinterSettingsPage", icon: "settings",sublist:"N",menuclose:"menuClose" },
+        // { title: 'Profile', component: "ProfilePage", icon: "md-person",sublist:"N",menuclose:"menuClose" },
+
         { title: 'Logout', component: "LoginPage", icon: "md-log-out",sublist:"N",menuclose:"menuClose" },
       ];
       this.rsublist=[
@@ -203,6 +219,8 @@ if(this.usertype=="C"){
     
     this.lsublist=[
       { title: 'Credit Customer List', component: "CreditcustomerlistPage", icon: "md-list",sublist:"L",menuclose:"menuClose" },
+      { title: 'Staff List', component: "StafflistPage", icon: "md-list",sublist:"L",menuclose:"menuClose" },
+      
       { title: 'Items List', component: "ReviewsPage", icon: "md-list",sublist:"L",menuclose:"menuClose" },
       { title: 'Catagory List', component: "FaqPage", icon: "md-list",sublist:"L",menuclose:"menuClose" },
     ]
@@ -276,6 +294,7 @@ if(this.usertype=="C"){
 
     });
     this.platform.registerBackButtonAction(() => {
+      this.usertype=localStorage.getItem("UserType");
       let nav = this.app.getActiveNav();
       let view = this.nav.getActive();
       let page = view ? this.nav.getActive().instance : null;
@@ -296,7 +315,7 @@ if(this.usertype=="C"){
 
       }
       if (nav.canGoBack()) { //Can we go back?
-        if(nav.getActive().name=='BookServicePage'){
+        if(nav.getActive().name=='BookServicePage' || nav.getActive().name=='CustomerorderPage'){
           this.myHandlerFunction();
         }
 
@@ -307,16 +326,25 @@ if(this.usertype=="C"){
         }
         }
          else {
-          
-          if(nav.getActive().name !='BookServicePage')
+          if(nav.getActive().name !='BookServicePage' && nav.getActive().name!=='CustomerorderPage')
           {
           if(nav.getActive().name =='BilldetailsPage' || nav.getActive().name =='NotificationsPage'){
-            this.nav.setRoot("BookServicePage", this.cart);
+            if(this.usertype==="C"){
+              this.nav.setRoot("CustomerorderPage");
+            }
+            else{
+              this.nav.setRoot("BookServicePage", this.cart);
+
+            }
+            
           }
           else if(nav.getActive().name =='NewmybookingsPage'){
             this.nav.setRoot("LoginPage");
           }
           else if(nav.getActive().name =='LoginPage'){
+            this.platform.exitApp();
+          }
+          else if(nav.getActive().name =='IntroductionSliderPage'){
             this.platform.exitApp();
           }
           else{
@@ -389,8 +417,16 @@ onMenuOpen(){
     }
     else{
       this.menuCtrl.close();
+
     this.nav.setRoot(page.component);
     }
+    
   }
-  
+
+  OpenProfilePage(){
+    this.nav.setRoot("ProfilePage");
+    this.menuCtrl.close();
+
+
+  }
 }

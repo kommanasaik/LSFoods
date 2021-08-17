@@ -4,26 +4,21 @@
 
 <ion-content padding>
   <form [formGroup]="profileForm" (ngSubmit)="startUploading()">
-      <img src={{profileImage}}>
+    <ion-row class="row" style="align-items:center;">
+          
+      <ion-col class="col" style="text-align: center;" col-12="">
+      <img  onerror="this.onerror=null;this.src='../assets/images/noimage.jpg'"  src="../assets/images/avatar.png" style="width: 150px;height: 150px;">
+      </ion-col>
+    </ion-row>
     <ion-item>
-      <ion-label floating>Name</ion-label>
+      <ion-label floating>UserName</ion-label>
       <ion-input type="text" formControlName="name"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label floating>Phone</ion-label>
+      <ion-label floating>Phone No</ion-label>
       <ion-input type="number" formControlName="phone" disabled></ion-input>
     </ion-item>
-    <ion-item>
-      <ion-label floating>Alt Phone</ion-label>
-      <ion-input type="text" formControlName="mobile"></ion-input>
-    </ion-item>
-      <ion-item>
-        <ion-label>Gender</ion-label>
-        <ion-select interface="action-sheet"  formControlName="gender">
-          <ion-option value="M">Male</ion-option>
-          <ion-option value="F">Female</ion-option>
-        </ion-select>
-      </ion-item>
+    
     <ion-item>
       <ion-label floating>Email</ion-label>
       <ion-input type="email" formControlName="email"></ion-input>
@@ -41,7 +36,7 @@
     <div>
       {{text}}
       <div style="text-align:center">
-        <img style="height: 200px;" [src]="previewUrl" />
+        <img style="height: 80px;width: 80px;" [src]="previewUrl" />
       </div>
       
     </div>

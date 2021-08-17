@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { state } from '@angular/core/src/animation/dsl';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams ,AlertController} from 'ionic-angular';
 import { BehaviorSubject } from 'rxjs';
 import { UtilsServiceProvider } from '../../providers/utils-service/utils-service';
 import { BookServicePage } from '../book-service/book-service';
@@ -8,6 +8,10 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
 import { BookServiceProvider } from '../../providers/book-service/book-service';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import {WeightapdPipe} from '../../pipes/weight/weight';
+import {LaunchNavigator,LaunchNavigatorOptions} from '@ionic-native/launch-navigator';
+
+import { Geolocation } from '@ionic-native/geolocation';
+import { NativeGeocoder, NativeGeocoderReverseResult, NativeGeocoderOptions,NativeGeocoderForwardResult } from '@ionic-native/native-geocoder';
 /**
  * Generated class for the BilldetailsPage page.
  *
@@ -53,6 +57,11 @@ export class BilldetailsPage {
     state_name:'Card'
   }
 ];
+custlat:string="";
+
+custlng:string="";
+custadd:string="";
+
 custhidden:boolean=false;
   custname="";
   custmobile="";
@@ -68,22 +77,36 @@ custhidden:boolean=false;
   LocationID="";
   locations:any;
   usertype:any;
+  address='';
+  locationDetails: Array<any> = [];
+
   constructor(
       public authService: AuthServiceProvider,
       public navCtrl: NavController,private fb: FormBuilder, public navParams: NavParams,
+    public alertCtrl: AlertController,
     public bookService: BookServiceProvider,
     public utils: UtilsServiceProvider,
-    ) {
-      if(navParams.data[0]==undefined){
-  this.navCtrl.setRoot("BookServicePage");
+    private geolocation: Geolocation,
+    private nativeGeocoder: NativeGeocoder,
+    private launchNavigator: LaunchNavigator
 
+    ) {
+this.usertype=localStorage.getItem("UserType");
+
+      if(navParams.data[0]==undefined){
+if(this.usertype==="C"){
+  this.navCtrl.setRoot("CustomerorderPage");
+
+}
+else{
+  this.navCtrl.setRoot("BookServicePage");
+}
       }else{
       this.cart= navParams.data;
     this.RegisterValidation();
     this.getCatagories()
       }
       
-this.usertype=localStorage.getItem("UserType");
 console.log(this.cart);
 
   }
@@ -119,7 +142,14 @@ console.log(this.cart);
     let data={
       frompage:'billpage'  
     }
-  this.navCtrl.setRoot("BookServicePage",data);
+    if(this.usertype==="C"){
+      this.navCtrl.setRoot("CustomerorderPage");
+    
+    }
+    else{
+      this.navCtrl.setRoot("BookServicePage");
+    }
+  //this.navCtrl.setRoot("BookServicePage",data);
 
     // this.navCtrl.setRoot("BookServicePage");
   }
@@ -194,6 +224,62 @@ this.creditcustname=Response.Name;
     });
         }
       }
+      myHandlerFunction() {
+        let userddi = localStorage.getItem('user_id');
+         let alert = this.alertCtrl.create({
+           title: 'Confirm',
+           cssClass: 'alertCancel',
+           mode: 'ios',
+           message: 'Do you want to confirm ?',
+           buttons: [
+            
+             {
+               text: 'Yes',
+               cssClass: 'alertButton',
+               handler: () => {
+                this.proceedtocheckout()
+               }
+             },
+             {
+               text: 'No',
+               cssClass: 'alertButton',
+               role: 'cancel',
+               handler: () => {
+               }
+             }
+           ]
+         });
+         alert.present();
+       }
+      confirmOrder(){
+        this.myHandlerFunction();
+      }
+      preproceedtocheckout(){
+        if(this.usertype=="C"){
+          if(this.LocationID && this.address){
+            if(this.address){
+              this.getadd(this.address);
+            }
+            this.confirmOrder();
+          }
+          else{
+            if(this.LocationID && this.address){
+            this.utils.presentAlert("Oops", "Please select Location, Address");
+            }
+            else if(!this.LocationID){
+              this.utils.presentAlert("Oops", "Please select Location");
+
+            }
+            if(!this.address){
+              this.utils.presentAlert("Oops", "Please Enter Address or Select Current Location");
+
+            }
+          }
+        }else{
+
+          this.confirmOrder();
+        }
+      }
       proceedtocheckout() {
         let custname=this.custname;
         let custmobile=this.custmobile;
@@ -206,6 +292,9 @@ this.creditcustname=Response.Name;
           paymentmodess="Cash";
         }
         for (var oa = 0; oa < this.cart.length; oa++) {
+          this.cart[oa]["latitude"]=this.custlat;
+          this.cart[oa]["longitude"]=this.custlng;
+          this.cart[oa]["address"]=this.address;
                      
           this.cart[oa]["PaymentType"]=paymentmodess;
           this.cart[oa]["LocationID"]=this.LocationID;
@@ -213,7 +302,7 @@ this.creditcustname=Response.Name;
           this.cart[oa]["OrderStatus"]=1;
           }
           else{
-
+            this.cart[oa]["ItemTotalAmout"]= (this.cart[oa].ItemQuantity *  this.cart[oa].Price)-( this.cart[oa].ItemDiscountAmount) ;
             this.cart[oa]["OrderStatus"]=2;
           }
           }
@@ -247,7 +336,14 @@ this.creditcustname=Response.Name;
                    }
                    else{
                     this.utils.presentAlert("Success", "Thank you for placing order.");
-                    this.navCtrl.setRoot("BookServicePage",this.cart);
+                    if(this.usertype==="C"){
+                      this.navCtrl.setRoot("CustomerorderPage");
+                    
+                    }
+                    else{
+                      this.navCtrl.setRoot("BookServicePage");
+                    }
+                //    this.navCtrl.setRoot("BookServicePage",this.cart);
                    }
                     this.utils.dismissLoading();
                   }
@@ -310,7 +406,14 @@ this.creditcustname=Response.Name;
                  }
                  else{
                   this.utils.presentAlert("Success", "Thank you for placing order.");
-                  this.navCtrl.setRoot("BookServicePage",this.cart);
+                
+                  if(this.usertype==="C"){
+                    this.navCtrl.setRoot("CustomerorderPage");
+                  
+                  }
+                  else{
+                    this.navCtrl.setRoot("BookServicePage");
+                  }
                  }
                         
                         this.utils.dismissLoading();
@@ -351,7 +454,13 @@ this.creditcustname=Response.Name;
                  }
                  else{
                   this.utils.presentAlert("Success", "Thank you for placing order.");
-                  this.navCtrl.setRoot("BookServicePage",this.cart);
+                  if(this.usertype==="C"){
+                    this.navCtrl.setRoot("CustomerorderPage");
+                  
+                  }
+                  else{
+                    this.navCtrl.setRoot("BookServicePage");
+                  }
                  }
                     
                     this.utils.dismissLoading();
@@ -373,5 +482,64 @@ this.creditcustname=Response.Name;
     }
     onRegisterSubmit(){
       this.proceedtocheckout() ;
+    }
+    getCurrentLocation() {
+      this.utils.presentLoading();
+
+      this.locationDetails = [];
+      let options: NativeGeocoderOptions = {
+        useLocale: true,
+        maxResults: 5
+      };
+      this.geolocation.getCurrentPosition().then((resp) => {
+        
+        this.nativeGeocoder.reverseGeocode(resp.coords.latitude, resp.coords.longitude, options)
+          .then((result: NativeGeocoderReverseResult[]) => {
+            this.locationDetails.push(result[0])
+            this.utils.dismissLoading();
+
+           this.address=(result[0].subLocality + "," + result[0].subAdministrativeArea + "," + result[0].locality + "," + result[0].postalCode + "," + result[0].countryName)
+          // this.sdfdsfsd(this.address,options);
+          this.getadd(this.address);
+          })
+          .catch((error: any) => console.log(error));
+      }).catch((error) => {
+      });
+    }
+    getadd(address){
+      let options: NativeGeocoderOptions = {
+        useLocale: true,
+        maxResults: 5
+      };
+      this.nativeGeocoder.forwardGeocode(address, options)
+  .then((result: NativeGeocoderForwardResult[]) => {
+  console.log('The coordinates are latitude=' + result[0].latitude + ' and longitude=' + result[0].longitude)
+  this.custlat=result[0].latitude;
+  this.custlng=result[0].longitude;
+
+  })
+  .catch((error: any) => console.log(error));
+    }
+
+
+    locateCustomer() {
+      let latitude = parseFloat('16.984010');
+      let longitude = parseFloat('81.783510');
+      this.navigateMaps(latitude, longitude)
+    }
+    navigateMaps(lat, lng) {
+      this.geolocation.getCurrentPosition().then((resp) => {
+     
+        let options: LaunchNavigatorOptions = {
+          start: [resp.coords.latitude, resp.coords.longitude],
+          app: this.launchNavigator.APP.USER_SELECT
+        };
+        this.launchNavigator.navigate([lat, lng], options)
+          .then(
+            success => console.log('Launched navigator'),
+            error => console.log('Error launching navigator', error)
+          );
+      })
+     
     }
 }

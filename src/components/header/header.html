@@ -2,10 +2,18 @@
   <button ion-button menuToggle >
       <ion-icon name='menu'></ion-icon>
   </button>
-  <ion-title>{{title}}</ion-title>
-  <ion-buttons right *ngIf="title=='Profile'">
+  <div style="width: 100%;">
+  <div style="float: left;width: 80%;">
+  <ion-title style="height: 36px;">{{title}}</ion-title>
+</div>
+  <!-- <ion-buttons right *ngIf="title=='Profile'">
       <button ion-button icon-only (click)="logout()">
           <ion-icon name="exit"></ion-icon>
       </button>
-  </ion-buttons>
+  </ion-buttons> -->
+  <!-- <div style="float: right; width: 20%;">
+    <img (click)="Navigate_To_Profile()" style="display: block;height: 36px; border-radius: 100%;border: 2px solid #999;" src="'../assets/images/noimage.jpg'?w=100&h=100"
+    onError="this.src='../assets/images/noimage.jpg'" />
+  </div> -->
+</div>
 </ion-navbar>

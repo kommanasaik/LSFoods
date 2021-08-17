@@ -8,6 +8,10 @@ import { PaymentServiceProvider } from '../../providers/payment-service/payment-
 import { Storage } from '@ionic/storage';
 import { UtilsServiceProvider } from '../../providers/utils-service/utils-service';
 
+import {LaunchNavigator,LaunchNavigatorOptions} from '@ionic-native/launch-navigator';
+
+import { Geolocation } from '@ionic-native/geolocation';
+import { NativeGeocoder, NativeGeocoderReverseResult, NativeGeocoderOptions,NativeGeocoderForwardResult } from '@ionic-native/native-geocoder';
 
 @IonicPage()
 @Component({
@@ -42,6 +46,9 @@ products:any;
 BillNo:any;
 MobileNo:any;
 Address:any;
+Lat:any;
+Lng:any;
+
 CustomerName:any;
 usertype:any;
   constructor(
@@ -50,7 +57,10 @@ usertype:any;
     public navCtrl: NavController,
     public navParams: NavParams,
     public storage: Storage,
-    public utils: UtilsServiceProvider
+    public utils: UtilsServiceProvider,
+    private geolocation: Geolocation,
+    private nativeGeocoder: NativeGeocoder,
+    private launchNavigator: LaunchNavigator
   ) {
 this.usertype=localStorage.getItem("UserType");
 
@@ -65,6 +75,9 @@ this.usertype=localStorage.getItem("UserType");
 
    this.CustomerName= this.navParams.data.CustomerName;
    this.Address= this.navParams.data.Address;
+   this.Lat= this.navParams.data.latitude;
+   this.Lng= this.navParams.data.longitude;
+
 
 
 
@@ -148,4 +161,27 @@ RegisterValidation(OrderID) {
    }
    });
  }
+ 
+ locateCustomer() {
+  // let latitude = parseFloat('16.984010');
+  //let longitude = parseFloat('81.783510');
+  let latitude = parseFloat(this.Lat);
+  let longitude = parseFloat(this.Lng);
+  this.navigateMaps(latitude, longitude)
+}
+navigateMaps(lat, lng) {
+  this.geolocation.getCurrentPosition().then((resp) => {
+ 
+    let options: LaunchNavigatorOptions = {
+      start: [resp.coords.latitude, resp.coords.longitude],
+      app: this.launchNavigator.APP.USER_SELECT
+    };
+    this.launchNavigator.navigate([lat, lng], options)
+      .then(
+        success => console.log('Launched navigator'),
+        error => console.log('Error launching navigator', error)
+      );
+  })
+ 
+}
 }

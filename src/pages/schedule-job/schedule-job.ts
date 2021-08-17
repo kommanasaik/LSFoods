@@ -45,6 +45,8 @@ cart:any;
 * Value of the minDate
 */
 totalval;
+totaldis;
+
   minDate;
 
   /**
@@ -144,6 +146,8 @@ submitDate() {
         this.responsecount=1;
 
         this.totalval = Response.map(bill => bill.OrderAmount).reduce((acc, bill) => bill + acc);
+        this.totaldis = Response.map(bill => bill.totalDiscoutAmount).reduce((acc, bill) => bill + acc);
+
         this.products=Response;
         this.cart=Response;
         this.products.sort(function(a, b){
@@ -155,6 +159,8 @@ submitDate() {
   //  this.utils.presentAlert("Oops", "No records found!");
     this.products=[];
     this.totalval=0;
+    this.totaldis=0;
+
     this.responsecount=0;
 
       }
@@ -201,6 +207,8 @@ this.navCtrl.push("NotificationsPage",this.cart);
               else{
         this.responsecount=0;
         this.totalval=0;
+        this.totaldis=0;
+
               }
     }
     else {
@@ -212,6 +220,8 @@ this.responsecount=1;
       else{
         this.totalval=0;
 this.responsecount=0;
+this.totaldis=0;
+
 
       }
 
@@ -221,6 +231,7 @@ this.responsecount=0;
     ev.target.value = '';
 this.responsecount=1;
 this.totalval=0;
+this.totaldis=0;
 
   }
   

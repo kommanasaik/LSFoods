@@ -30,6 +30,8 @@ import { UniqueDeviceID } from '@ionic-native/unique-device-id';
 import { StreamingMedia } from '@ionic-native/streaming-media';
 import { Geolocation } from '@ionic-native/geolocation';
 import { NativeGeocoder } from '@ionic-native/native-geocoder';
+import { LaunchNavigator } from '@ionic-native/launch-navigator';
+
 import { PhotoViewer } from '@ionic-native/photo-viewer';
 import { ReviewServiceProvider } from '../providers/review-service/review-service';
 import { NetworkServiceProvider } from '../providers/network-service/network-service';
@@ -82,6 +84,7 @@ import { PrinterProvider } from '../providers/printer/printer';
     StreamingMedia,
     Geolocation,
     NativeGeocoder,
+    LaunchNavigator,
     // BluetoothSerial,
     Network,
     PhotoViewer,

@@ -74,17 +74,23 @@
         {{ item.ItemDiscountAmount | currency:'INR' }}
         </span>
       </ion-col>
-      <ion-col col-2>
+      <ion-col col-2 *ngIf="usertype!=='C'">
 
         <span style="float: right;" >
-          <strong>{{ (item.ItemQuantity * item.Price)-(item.ItemDiscountAmount) | currency:'INR' }}</strong>
+          <strong>{{ (item.Weight * item.ActualPrice)-(item.ItemDiscountAmount) | currency:'INR' }}</strong>
+        </span>
+      </ion-col>
+      <ion-col col-2 *ngIf="usertype==='C'">
+
+        <span style="float: right;" >
+          <strong>{{ (item.Weight * item.Amount)| currency:'INR' }}</strong>
         </span>
       </ion-col>
     </ion-row>
   </div>
   <hr class="new3">
   <ion-row style="position:absolute;right: 18px;">
-    <p>Total Amount: ( {{totalquantity}} ) =
+    <p>Total Amount:
       <strong>{{totalbillamount | currency:'INR'}}</strong>
     </p>
   </ion-row>
@@ -228,9 +234,20 @@
     </form>
   </div>
 </div> 
+<div *ngIf="this.usertype=='C' && !hiddenForm1"    >
+<button ion-button  style="color: #b8860b;" (click)="getCurrentLocation()" clear>
+  <ion-icon name="locate" style="color: #b8860b;" ></ion-icon>&nbsp;
+  My current Location</button>
+<br>
+
+<ion-item >
+<ion-label floating  style="color: #b8860b;" >Address</ion-label>
+<ion-textarea [(ngModel)]="address"></ion-textarea>
+</ion-item>
+</div>
   <div *ngIf="!hiddenForm1" id="btnsubmit" [ngStyle]="{'display':cart.length>0 ? 'inline': 'none'}"
     style="padding: 5px;; width: 100%;">
-    <button ion-button block tappable style="background-color: #b8860b;" (click)="proceedtocheckout()">
+    <button ion-button block tappable style="background-color: #b8860b;" (click)="preproceedtocheckout()">
       CHECK OUT
     </button>
   </div>

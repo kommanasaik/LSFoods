@@ -7,6 +7,19 @@
   
     <ion-content>
         <img style="padding: 16px;" [src]="AppLogo"/>
+        <!-- <ion-row class="row" style="align-items:center;">
+          
+          <ion-col class="col" style="text-align: center;" col-12="">
+            <img class="user-avatar round" onerror="this.src='../assets/images/repair.png'" src="../assets/images/avatar.png" style="width: 80px;height: 80px;">
+          </ion-col>
+          <ion-col  col-10 *ngIf="UserName">
+            <h3 class="name" style="padding-left: 40px;text-align:center;margin-top: 0;margin-bottom: 5px;text-transform: capitalize;">{{UserName.length > 20 ? UserName.substring(0,20)+"..." : UserName}}</h3>
+
+          </ion-col>
+            <ion-icon name="md-open"  float-right style="font-size: 1.5rem;
+            color: black;" (click)="OpenProfilePage()"></ion-icon>
+        </ion-row> -->
+     
       <ion-list>
         <div [ngClass]="p.sublist!='R' && p.sublist!='L' ? '' : 'bgclass'"  *ngFor="let p of pages"  ion-item  (click)="openPage(p)">
           

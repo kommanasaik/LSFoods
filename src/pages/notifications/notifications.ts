@@ -46,6 +46,7 @@ cname:'';
   * initializing heaserTitle value
   */username: any;
   phone: any;
+  usertype:any;
 billno:any;
   constructor(
     public authService: AuthServiceProvider,
@@ -55,14 +56,22 @@ billno:any;
     private alertCtrl: AlertController,
     private storage: Storage
     ,
+    
     private printer: PrinterProvider,
     public datepipe: DatePipe,
     private printerData: PrinterDataProvider,
   ) {
+this.usertype=localStorage.getItem("UserType");
    
     this.headerTitle = "";
     if (navParams.data[0] == undefined) {
-      this.navCtrl.setRoot("BookServicePage");
+      if(this.usertype==="C"){
+        this.navCtrl.setRoot("CustomerorderPage");
+      
+      }
+      else{
+        this.navCtrl.setRoot("BookServicePage");
+      }
 
     } else {
       //  this.cart= navParams.data;
